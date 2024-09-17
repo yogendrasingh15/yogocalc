@@ -8,9 +8,15 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag "application" %>
+    <% if current_user %>
+        <%= render 'header', layout: 'header' %>
+    <%end%>
   </head>
 
   <body>
+    <% if current_user %>
+      <%= render 'sidebar', layout: 'sidebar' %>
+    <%end%>
     <% if notice %>
       <p class="alert alert-success"><%= notice %></p>
     <% end %>

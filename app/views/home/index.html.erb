@@ -4,14 +4,61 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>
-		dkaasbjas
+		Yogo calculaton
 	</title>
-	<div class="right"><%= button_to "Logout", destroy_user_session_path, method: :delete  %></div>
+	<% if current_user %>
+	<ul class="pull-right" style="padding:20px;">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Account <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li>Profile</li>
+          <li class="divider"></li>
+          <li>
+            <%= button_to "Logout", destroy_user_session_path, method: :delete  %>
+          </li>
+          <li>Setting</li>
+        </ul> 
+      </li>
+  </ul>
+      <%end%>
 
 </head>
 <body>
 	<h1>Welcome to Yogo clculation</h1>
 	<span>Find me in app/views/home/index.html.erb</span>
-	<button class="btn btn-success">BET ON</button>
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Bet On
+</button>
+<ul><li>one</li>
+	<li>two</li>
+</ul>
 </body>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= form_with url: "/create", method: :get do |form| %>
+		  <%= form.label :query, "Search for:" %>
+		  <%= form.text_field :query %>
+		  <%= form.submit "Search" %>
+		<% end %>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 </html>

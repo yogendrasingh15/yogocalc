@@ -10,15 +10,49 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_08_26_135515) do
+ActiveRecord::Schema[7.0].define(version: 2024_08_31_164134) do
+  create_table "bets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.float "amount"
+    t.integer "match_id"
+    t.boolean "yes_not"
+    t.float "bet_reading"
+    t.integer "score"
+    t.integer "wicket"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_bets_on_user_id"
+  end
+
+  create_table "contacts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "gender"
+    t.string "mobile"
+    t.string "email"
+    t.string "address"
+    t.string "dob"
+    t.bigint "role_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["role_id"], name: "index_contacts_on_role_id"
+  end
+
+  create_table "roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_roles_on_user_id"
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name", default: "", null: false
+    t.string "name", default: ""
     t.string "email", default: "", null: false
-    t.integer "mobile", null: false
-    t.boolean "is_whatsapp", default: false, null: false
-    t.string "address", default: "", null: false
-    t.string "dob", default: "", null: false
-    t.string "gender", default: "", null: false
+    t.integer "mobile"
+    t.boolean "is_whatsapp", default: false
+    t.string "address", default: ""
+    t.string "dob", default: ""
+    t.string "gender", default: ""
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
