@@ -1,0 +1,25 @@
+{
+  "name": "YogoCalc Ruby on Rails",
+  "image": "mcr.microsoft.com/devcontainers/ruby:3.0-bullseye",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "18"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rebornix.ruby",
+        "castwide.solargraph"
+      ]
+    }
+  },
+  "postCreateCommand": "bundle install && yarn install",
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Rails Server",
+      "onAutoForward": "notify"
+    }
+  }
+}
