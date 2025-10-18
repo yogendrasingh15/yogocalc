@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+require_relative '../config/environment'
+
+begin
+  ActiveRecord::Base.connection
+  puts "✅ Database connection successful!"
+  puts "Database: #{ActiveRecord::Base.connection.current_database}"
+  puts "Adapter: #{ActiveRecord::Base.connection.adapter_name}"
+  puts "MySQL Version: #{ActiveRecord::Base.connection.select_value('SELECT VERSION()')}"
+rescue => e
+  puts "❌ Database connection failed!"
+  puts "Error: #{e.message}"
+  exit 1
+end

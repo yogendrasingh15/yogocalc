@@ -1,6 +1,8 @@
 {
   "name": "YogoCalc Ruby on Rails",
-  "image": "mcr.microsoft.com/devcontainers/ruby:3.0-bullseye",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "features": {
     "ghcr.io/devcontainers/features/node:1": {
       "version": "18"
@@ -15,11 +17,15 @@
     }
   },
   "postCreateCommand": "bundle install && yarn install",
-  "forwardPorts": [3000],
+  "forwardPorts": [3000, 3306],
   "portsAttributes": {
     "3000": {
       "label": "Rails Server",
       "onAutoForward": "notify"
+    },
+    "3306": {
+      "label": "MySQL",
+      "onAutoForward": "silent"
     }
   }
 }
