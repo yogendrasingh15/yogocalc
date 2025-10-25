@@ -1,0 +1,24 @@
+<h1><%= @seller.name %></h1>
+
+<p>
+  <strong>Email:</strong>
+  <%= mail_to @seller.email %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @seller.phone %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @seller.active? ? 'Yes' : 'No' %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= simple_format(@seller.description) %>
+</p>
+
+<%= link_to 'Edit', edit_seller_path(@seller), class: 'btn btn-primary' %>
+<%= link_to 'Back', sellers_path, class: 'btn btn-link' %>

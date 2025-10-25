@@ -1,0 +1,30 @@
+<h1>Sellers</h1>
+
+<%= link_to 'New Seller', new_seller_path, class: 'btn btn-primary' %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Active</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @sellers.each do |seller| %>
+      <tr>
+        <td><%= seller.name %></td>
+        <td><%= mail_to seller.email %></td>
+        <td><%= seller.phone %></td>
+        <td><%= seller.active? ? 'Yes' : 'No' %></td>
+        <td>
+          <%= link_to 'Show', seller_path(seller), class: 'btn btn-sm btn-secondary' %>
+          <%= link_to 'Edit', edit_seller_path(seller), class: 'btn btn-sm btn-primary' %>
+          <%= link_to 'Destroy', seller_path(seller), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
