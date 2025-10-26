@@ -1,6 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
   <div class="container">
-    <%= link_to 'YOGO', root_path, class: 'navbar-brand' %>
+    <%= link_to root_path, class: 'navbar-brand d-flex align-items-center' do %>
+      <%= image_tag 'dry-solutions.png', alt: 'YOGO', width: 120, height: 40, class: 'me-2' %>
+    <% end %>
 
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav ms-auto">

@@ -8,9 +8,7 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag "application" %>
-    <% if current_user %>
-        <%= render 'header', layout: 'header' %>
-    <%end%>
+    <%= render 'header', layout: 'header' %>
   </head>
 
   <body>
