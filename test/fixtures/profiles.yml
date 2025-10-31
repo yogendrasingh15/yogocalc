@@ -1,0 +1,7 @@
+one:
+  name: MyString
+  email: one@example.com
+  address: MyText
+  mobile: 1234567890
+  pincode: 123456
+  gender: male
