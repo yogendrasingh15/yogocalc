@@ -6,23 +6,6 @@
 	<title>
 		Dry Solutions Pvt Ltd
 	</title>
-	<% if current_user %>
-	<ul class="pull-right" style="padding:20px;">
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          Account <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-          <li>Profile</li>
-          <li class="divider"></li>
-          <li>
-            <%= button_to "Logout", destroy_user_session_path, method: :delete  %>
-          </li>
-          <li>Setting</li>
-        </ul> 
-      </li>
-  </ul>
-      <%end%>
 
 </head>
 <body>

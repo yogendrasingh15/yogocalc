@@ -3,7 +3,32 @@
     <%= link_to root_path, class: 'navbar-brand d-flex align-items-center' do %>
       <%= image_tag 'dry-solutions.png', alt: 'YOGO', width: 120, height: 40, class: 'me-2' %>
     <% end %>
-
+    <div class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
+      <span class="navbar-toggler-icon">
+    <% if current_user %>
+      <div class="dropdown">
+        <button class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="ms-2 d-none d-md-inline"><%= current_user.name %></span>
+        </button>
+    <ul class="pull-right" style="padding:20px;">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <%= current_user.name %> <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li><%= link_to 'Profile', profile_path(current_user), class: 'dropdown-item' %></li>
+            <li class="divider"></li>
+            <li>
+              <%= button_to "Logout", destroy_user_session_path, method: :delete , class: 'dropdown-item' %>
+            </li>
+            <li class="divider"></li>
+            <li><%= button_to "Setting", destroy_user_session_path, method: :delete, class: 'dropdown-item'  %></li>
+          </ul> 
+        </li>
+    </ul>
+    <%end%>
+      </span>
+    </div>
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item"><%= link_to 'Home', root_path, class: 'nav-link' %></li>
