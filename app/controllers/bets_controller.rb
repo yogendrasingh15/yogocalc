@@ -1,10 +1,10 @@
 class BetsController < InheritedResources::Base
 
   def index
+    @bets = Bet.where(user_id: current_user.id)
   end
 
   def create
-    binding.pry
   end
 
   private

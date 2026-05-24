@@ -26,6 +26,9 @@
     padding: 0;
 
     .list-group-item {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
       background: transparent;
       border: none;
       border-left: 4px solid transparent;
@@ -48,7 +51,6 @@
       }
 
       i {
-        margin-right: $spacing-sm;
         width: 20px;
         text-align: center;
       }
