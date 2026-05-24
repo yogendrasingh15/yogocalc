@@ -1,8 +1,46 @@
 <aside class="sidebar">
   <div class="list-group">
-    <%= link_to 'Dashboard', root_path, class: 'list-group-item list-group-item-action' %>
-    <%= link_to 'Sellers', sellers_path, class: 'list-group-item list-group-item-action' %>
-    <%= link_to 'Bets', bets_path, class: 'list-group-item list-group-item-action' %>
-    <%= link_to 'Contacts', contacts_path, class: 'list-group-item list-group-item-action' %>
+    <div class="px-3 py-3 mb-2">
+      <h6 class="text-white text-uppercase small fw-bold opacity-75">Menu</h6>
+    </div>
+
+    <%= link_to root_path, class: "list-group-item list-group-item-action #{current_page?(root_path) ? 'active' : ''}" do %>
+      <i class="bi bi-house-door"></i>
+      <span>Dashboard</span>
+    <% end %>
+
+    <%= link_to sellers_path, class: "list-group-item list-group-item-action #{current_page?(sellers_path) ? 'active' : ''}" do %>
+      <i class="bi bi-shop"></i>
+      <span>Sellers</span>
+    <% end %>
+
+    <%= link_to bets_path, class: "list-group-item list-group-item-action #{current_page?(bets_path) ? 'active' : ''}" do %>
+      <i class="bi bi-dice-5"></i>
+      <span>Bets</span>
+    <% end %>
+
+    <%= link_to contacts_path, class: "list-group-item list-group-item-action #{current_page?(contacts_path) ? 'active' : ''}" do %>
+      <i class="bi bi-person-lines-fill"></i>
+      <span>Contacts</span>
+    <% end %>
+
+    <%= link_to roles_path, class: "list-group-item list-group-item-action #{current_page?(roles_path) ? 'active' : ''}" do %>
+      <i class="bi bi-shield-check"></i>
+      <span>Roles</span>
+    <% end %>
+
+    <%= link_to profiles_path, class: "list-group-item list-group-item-action #{current_page?(profiles_path) ? 'active' : ''}" do %>
+      <i class="bi bi-person-badge"></i>
+      <span>Profiles</span>
+    <% end %>
+
+    <div class="border-top border-secondary-subtle mt-2 pt-2">
+      <h6 class="text-white text-uppercase small fw-bold opacity-75 px-3 py-2">Admin</h6>
+    </div>
+
+    <%= link_to nominees_path, class: "list-group-item list-group-item-action #{current_page?(nominees_path) ? 'active' : ''}" do %>
+      <i class="bi bi-people-fill"></i>
+      <span>Nominees</span>
+    <% end %>
   </div>
 </aside>

@@ -1,0 +1,46 @@
+<!-- app/views/shared/_form_group.html.erb -->
+<div class="form-group mb-3">
+  <% if local_assigns[:label] %>
+    <%= form.label local_assigns[:field], local_assigns[:label], class: 'form-label' %>
+  <% end %>
+
+  <% if local_assigns[:field_type] == 'textarea' %>
+    <%= form.text_area local_assigns[:field], 
+        class: "form-control #{local_assigns[:errors] ? 'is-invalid' : ''}", 
+        placeholder: local_assigns[:placeholder],
+        rows: local_assigns[:rows] || 4,
+        required: local_assigns[:required] %>
+  <% elsif local_assigns[:field_type] == 'select' %>
+    <%= form.select local_assigns[:field], 
+        local_assigns[:options] || [], 
+        { prompt: local_assigns[:prompt] },
+        class: "form-select #{local_assigns[:errors] ? 'is-invalid' : ''}",
+        required: local_assigns[:required] %>
+  <% elsif local_assigns[:field_type] == 'checkbox' %>
+    <div class="form-check">
+      <%= form.check_box local_assigns[:field], 
+          { class: "form-check-input #{local_assigns[:errors] ? 'is-invalid' : ''}" },
+          true, false %>
+      <label class="form-check-label" for="<%= "#{form.object_name}_#{local_assigns[:field]}" %>">
+        <%= local_assigns[:label] %>
+      </label>
+    </div>
+  <% else %>
+    <%= form.text_field local_assigns[:field], 
+        class: "form-control #{local_assigns[:errors] ? 'is-invalid' : ''}", 
+        placeholder: local_assigns[:placeholder],
+        required: local_assigns[:required] %>
+  <% end %>
+
+  <% if local_assigns[:errors] && local_assigns[:errors].any? %>
+    <div class="invalid-feedback d-block">
+      <%= local_assigns[:errors].join(', ') %>
+    </div>
+  <% end %>
+
+  <% if local_assigns[:help_text] %>
+    <small class="form-text text-muted d-block mt-1">
+      <%= local_assigns[:help_text] %>
+    </small>
+  <% end %>
+</div>

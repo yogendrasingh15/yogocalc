@@ -1,0 +1,57 @@
+<!-- app/views/shared/_data_table.html.erb -->
+<div class="table-responsive">
+  <table class="table table-hover align-middle">
+    <thead class="table-light">
+      <tr>
+        <% local_assigns[:columns].each do |column| %>
+          <th scope="col" class="fw-semibold">
+            <% if column[:sortable] && local_assigns[:sort_path] %>
+              <%= link_to column[:label], local_assigns[:sort_path].call(column[:key]), class: 'text-decoration-none text-dark' %>
+            <% else %>
+              <%= column[:label] %>
+            <% end %>
+          </th>
+        <% end %>
+        <% if local_assigns[:actions] %>
+          <th scope="col" class="fw-semibold">Actions</th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% if local_assigns[:items].empty? %>
+        <tr>
+          <td colspan="<%= local_assigns[:columns].length + (local_assigns[:actions] ? 1 : 0) %>" class="text-center text-muted py-4">
+            <i class="bi bi-inbox fs-4 d-block mb-2"></i>
+            No records found
+          </td>
+        </tr>
+      <% else %>
+        <% local_assigns[:items].each do |item| %>
+          <tr>
+            <% local_assigns[:columns].each do |column| %>
+              <td>
+                <% if column[:format] %>
+                  <%= column[:format].call(item.send(column[:key])) %>
+                <% else %>
+                  <%= item.send(column[:key]) %>
+                <% end %>
+              </td>
+            <% end %>
+            <% if local_assigns[:actions] %>
+              <td>
+                <div class="btn-group btn-group-sm" role="group">
+                  <% local_assigns[:actions].each do |action| %>
+                    <%= link_to action[:label], action[:path].call(item), 
+                        class: "btn btn-outline-#{action[:style] || 'secondary'} btn-sm",
+                        method: action[:method],
+                        data: { confirm: action[:confirm] } %>
+                  <% end %>
+                </div>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

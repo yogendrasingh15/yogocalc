@@ -1,26 +1,38 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Dry Solutions Pvt Ltd</title>
+    <title>YogoCalc - Dry Solutions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= stylesheet_link_tag "application" %>
-    <%= render 'header', layout: 'header' %>
+    <%= render 'header' %>
   </head>
 
   <body>
-    <% if current_user %>
-      <%= render 'sidebar', layout: 'sidebar' %>
-    <%end%>
-    <% if notice %>
-      <p class="alert alert-success"><%= notice %></p>
-    <% end %>
-    <% if alert %>
-      <p class="alert alert-danger"><%= alert %></p>
-    <% end %>
-    <%= yield %>
+    <div class="d-flex" style="min-height: 100vh;">
+      <% if current_user %>
+        <%= render 'sidebar' %>
+      <% end %>
+      <div class="flex-grow-1 d-flex flex-column">
+        <% if notice %>
+          <div class="alert alert-success alert-dismissible fade show m-3" role="alert">
+            <%= notice %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <% end %>
+        <% if alert %>
+          <div class="alert alert-danger alert-dismissible fade show m-3" role="alert">
+            <%= alert %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <% end %>
+        <main class="flex-grow-1">
+          <%= yield %>
+        </main>
+      </div>
+    </div>
   </body>
 </html>

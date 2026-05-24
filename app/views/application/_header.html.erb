@@ -1,45 +1,496 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
-  <div class="container">
-    <%= link_to root_path, class: 'navbar-brand d-flex align-items-center' do %>
-      <%= image_tag 'dry-solutions.png', alt: 'YOGO', width: 120, height: 40, class: 'me-2' %>
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top header-navbar">
+  <div class="container-fluid px-3 px-md-4">
+    <!-- Brand -->
+    <%= link_to root_path, class: 'navbar-brand d-flex align-items-center fw-bold' do %>
+      <div class="brand-icon me-3">
+        <i class="bi bi-calculator-fill"></i>
+      </div>
+      <div class="d-none d-lg-block">
+        <div class="brand-name">YogoCalc</div>
+        <div class="brand-tagline">Finance Solutions</div>
+      </div>
     <% end %>
-    <div class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
-      <span class="navbar-toggler-icon">
-    <% if current_user %>
-      <div class="dropdown">
-        <button class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-          <span class="ms-2 d-none d-md-inline"><%= current_user.name %></span>
-        </button>
-    <ul class="pull-right" style="padding:20px;">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <%= current_user.name %> <b class="caret"></b>
-          </a>
-          <ul class="dropdown-menu">
-            <li><%= link_to 'Profile', profile_path(current_user), class: 'dropdown-item' %></li>
-            <li class="divider"></li>
-            <li>
-              <%= button_to "Logout", destroy_user_session_path, method: :delete , class: 'dropdown-item' %>
-            </li>
-            <li class="divider"></li>
-            <li><%= button_to "Setting", destroy_user_session_path, method: :delete, class: 'dropdown-item'  %></li>
-          </ul> 
+
+    <!-- Hamburger Toggle -->
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="bi bi-list"></i>
+    </button>
+
+    <!-- Navigation -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto gap-1 gap-lg-0">
+        <li class="nav-item">
+          <%= link_to root_path, class: "nav-link #{current_page?(root_path) ? 'active' : ''}" do %>
+            <i class="bi bi-house-door"></i>
+            <span class="d-none d-lg-inline">Home</span>
+          <% end %>
         </li>
-    </ul>
-    <%end%>
-      </span>
-    </div>
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><%= link_to 'Home', root_path, class: 'nav-link' %></li>
-        <li class="nav-item"><%= link_to 'Sellers', sellers_path, class: 'nav-link' %></li>
-        <li class="nav-item"><%= link_to 'Contacts', contacts_path, class: 'nav-link' %></li>
+        <li class="nav-item">
+          <%= link_to sellers_path, class: "nav-link #{current_page?(sellers_path) ? 'active' : ''}" do %>
+            <i class="bi bi-shop"></i>
+            <span class="d-none d-lg-inline">Sellers</span>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to bets_path, class: "nav-link #{current_page?(bets_path) ? 'active' : ''}" do %>
+            <i class="bi bi-dice-5"></i>
+            <span class="d-none d-lg-inline">Bets</span>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to contacts_path, class: "nav-link #{current_page?(contacts_path) ? 'active' : ''}" do %>
+            <i class="bi bi-person-lines-fill"></i>
+            <span class="d-none d-lg-inline">Contacts</span>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to roles_path, class: "nav-link #{current_page?(roles_path) ? 'active' : ''}" do %>
+            <i class="bi bi-shield-check"></i>
+            <span class="d-none d-lg-inline">Roles</span>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to profiles_path, class: "nav-link #{current_page?(profiles_path) ? 'active' : ''}" do %>
+            <i class="bi bi-person-badge"></i>
+            <span class="d-none d-lg-inline">Profiles</span>
+          <% end %>
+        </li>
+      </ul>
+
+      <!-- Right Side Items -->
+      <ul class="navbar-nav ms-auto gap-2 align-items-center">
+        <!-- Search Bar -->
+        <li class="nav-item d-none d-lg-block">
+          <div class="search-box">
+            <i class="bi bi-search"></i>
+            <input type="text" class="search-input" placeholder="Search...">
+          </div>
+        </li>
+
+        <!-- Notifications -->
+        <li class="nav-item">
+          <button class="nav-link notification-btn position-relative" data-bs-toggle="dropdown" aria-expanded="false" title="Notifications">
+            <i class="bi bi-bell"></i>
+            <span class="notification-badge">3</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end notification-dropdown">
+            <li class="dropdown-header">
+              <h6 class="mb-0">Notifications</h6>
+            </li>
+            <li class="notification-item">
+              <a class="dropdown-item" href="#">
+                <div class="notification-content">
+                  <p class="notification-title">New seller registered</p>
+                  <small class="text-muted">5 minutes ago</small>
+                </div>
+              </a>
+            </li>
+            <li class="notification-item">
+              <a class="dropdown-item" href="#">
+                <div class="notification-content">
+                  <p class="notification-title">Bet updated successfully</p>
+                  <small class="text-muted">30 minutes ago</small>
+                </div>
+              </a>
+            </li>
+            <li class="notification-item">
+              <a class="dropdown-item" href="#">
+                <div class="notification-content">
+                  <p class="notification-title">New profile created</p>
+                  <small class="text-muted">2 hours ago</small>
+                </div>
+              </a>
+            </li>
+            <li><hr class="dropdown-divider m-2"></li>
+            <li class="text-center py-2">
+              <a href="#" class="text-primary small">View all notifications</a>
+            </li>
+          </ul>
+        </li>
+
         <% if user_signed_in? %>
-          <li class="nav-item"><%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'nav-link' %></li>
+          <!-- User Dropdown -->
+          <li class="nav-item dropdown">
+            <button class="nav-link user-dropdown-btn d-flex align-items-center gap-2" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="https://ui-avatars.com/api/?name=<%= current_user.name %>&background=2563eb&color=fff&size=32" alt="<%= current_user.name %>" class="user-avatar">
+              <span class="d-none d-md-inline user-name"><%= current_user.name %></span>
+              <i class="bi bi-chevron-down d-none d-md-inline"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end user-dropdown" aria-labelledby="userDropdown">
+              <!-- User Info Header -->
+              <li class="dropdown-header pb-3">
+                <div class="d-flex align-items-center gap-3">
+                  <img src="https://ui-avatars.com/api/?name=<%= current_user.name %>&background=2563eb&color=fff&size=48" alt="<%= current_user.name %>" class="rounded-circle" style="width: 48px; height: 48px;">
+                  <div>
+                    <h6 class="mb-0 fw-bold"><%= current_user.name %></h6>
+                    <small class="text-muted"><%= current_user.email %></small>
+                  </div>
+                </div>
+              </li>
+              <li><hr class="dropdown-divider m-2"></li>
+              
+              <!-- Menu Items -->
+              <li>
+                <%= link_to profile_path(current_user), class: 'dropdown-item d-flex align-items-center gap-2' do %>
+                  <i class="bi bi-person-fill text-primary"></i>
+                  <span>My Profile</span>
+                <% end %>
+              </li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center gap-2" href="#" data-bs-toggle="modal" data-bs-target="#settingsModal">
+                  <i class="bi bi-gear text-primary"></i>
+                  <span>Settings</span>
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center gap-2" href="#">
+                  <i class="bi bi-question-circle text-primary"></i>
+                  <span>Help & Support</span>
+                </a>
+              </li>
+              <li><hr class="dropdown-divider m-2"></li>
+              
+              <!-- Sign Out -->
+              <li>
+                <%= button_to destroy_user_session_path, method: :delete, class: 'dropdown-item d-flex align-items-center gap-2 text-danger', form: { class: 'w-100' } do %>
+                  <i class="bi bi-box-arrow-right"></i>
+                  <span>Sign Out</span>
+                <% end %>
+              </li>
+            </ul>
+          </li>
         <% else %>
-          <li class="nav-item"><%= link_to 'Sign in', new_user_session_path, class: 'nav-link' %></li>
+          <li class="nav-item">
+            <%= link_to 'Sign In', new_user_session_path, class: 'btn btn-primary btn-sm' %>
+          </li>
         <% end %>
       </ul>
     </div>
   </div>
 </nav>
+
+<!-- Settings Modal -->
+<% if user_signed_in? %>
+  <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0">
+        <div class="modal-header border-bottom">
+          <h5 class="modal-title fw-bold" id="settingsModalLabel">
+            <i class="bi bi-gear me-2 text-primary"></i>Settings
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Preference Items -->
+          <div class="preference-item">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <label class="fw-bold mb-0">Dark Mode</label>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="darkModeToggle">
+              </div>
+            </div>
+            <small class="text-muted">Enable dark theme for reduced eye strain</small>
+          </div>
+
+          <div class="preference-item">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <label class="fw-bold mb-0">Email Notifications</label>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="notificationsToggle" checked>
+              </div>
+            </div>
+            <small class="text-muted">Receive notifications about important updates</small>
+          </div>
+
+          <div class="preference-item">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <label class="fw-bold mb-0">Show Online Status</label>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="onlineStatusToggle" checked>
+              </div>
+            </div>
+            <small class="text-muted">Let others see when you're online</small>
+          </div>
+        </div>
+        <div class="modal-footer border-top">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<style>
+  /* Header Navbar */
+  .header-navbar {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0.75rem 0;
+  }
+
+  /* Brand */
+  .navbar-brand {
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .navbar-brand:hover {
+    opacity: 0.85;
+  }
+
+  .brand-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .brand-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1f2937;
+    letter-spacing: -0.5px;
+  }
+
+  .brand-tagline {
+    font-size: 0.7rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+  }
+
+  /* Navigation Links */
+  .nav-link {
+    color: #6b7280 !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 0.5rem 0.75rem !important;
+    border-radius: 6px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .nav-link:hover {
+    color: #2563eb !important;
+    background: #f3f4f6;
+  }
+
+  .nav-link.active {
+    color: #2563eb !important;
+    background: #eff6ff;
+    font-weight: 600;
+  }
+
+  .nav-link i {
+    font-size: 1.1rem;
+  }
+
+  /* Search Box */
+  .search-box {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    transition: all 0.3s ease;
+  }
+
+  .search-box:hover,
+  .search-box:focus-within {
+    background: white;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+
+  .search-input {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 200px;
+    font-size: 0.9rem;
+    color: #1f2937;
+  }
+
+  .search-input::placeholder {
+    color: #9ca3af;
+  }
+
+  .search-box i {
+    color: #9ca3af;
+  }
+
+  /* Notifications */
+  .notification-btn {
+    position: relative;
+    color: #6b7280 !important;
+    padding: 0.5rem 0.75rem !important;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+  }
+
+  .notification-btn:hover {
+    background: #f3f4f6;
+    color: #2563eb !important;
+  }
+
+  .notification-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #ef4444;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 700;
+  }
+
+  .notification-dropdown {
+    min-width: 320px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    border: none;
+    border-radius: 8px;
+  }
+
+  .notification-item a {
+    border-bottom: 1px solid #f3f4f6;
+    padding: 1rem !important;
+    transition: all 0.2s ease;
+  }
+
+  .notification-item a:hover {
+    background: #f9fafb;
+  }
+
+  .notification-item a:last-child {
+    border-bottom: none;
+  }
+
+  .notification-content p {
+    margin: 0;
+    color: #1f2937;
+    font-weight: 500;
+  }
+
+  /* User Avatar */
+  .user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid #e5e7eb;
+    transition: all 0.3s ease;
+  }
+
+  .user-dropdown-btn {
+    padding: 0.5rem 0.75rem !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .user-dropdown-btn:hover {
+    background: #f3f4f6;
+  }
+
+  .user-name {
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  /* User Dropdown */
+  .user-dropdown {
+    min-width: 280px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    border: none;
+    border-radius: 8px;
+  }
+
+  .user-dropdown .dropdown-item {
+    color: #374151;
+    padding: 0.75rem 1rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .user-dropdown .dropdown-item:hover {
+    background: #f3f4f6;
+    color: #2563eb;
+  }
+
+  .user-dropdown .dropdown-item i {
+    width: 20px;
+    text-align: center;
+  }
+
+  /* Preferences */
+  .preference-item {
+    padding: 1rem;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .preference-item:last-child {
+    border-bottom: none;
+  }
+
+  .preference-item:hover {
+    background: #f9fafb;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 992px) {
+    .navbar-collapse {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .search-box {
+      margin: 0.75rem 0;
+      width: 100%;
+    }
+
+    .search-input {
+      width: 100%;
+    }
+
+    .navbar-nav {
+      flex-direction: column;
+      gap: 0 !important;
+    }
+
+    .nav-link {
+      padding: 0.75rem 1rem !important;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .brand-tagline {
+      display: none;
+    }
+
+    .notification-dropdown {
+      min-width: 280px;
+    }
+
+    .user-dropdown {
+      min-width: 250px;
+    }
+  }
+</style>

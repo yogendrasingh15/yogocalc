@@ -1,43 +1,582 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>
-		Dry Solutions Pvt Ltd
-	</title>
-
-</head>
-<body>
-	<h1>Welcome to Dry Solutions Pvt Ltd</h1>
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Bet On
-</button>
-<ul><li>one</li>
-	<li>two</li>
-</ul>
-</body>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+<div class="finance-dashboard">
+  <!-- Header Section -->
+  <div class="dashboard-header mb-5">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <h1 class="display-6 fw-bold text-dark mb-2">Dashboard</h1>
+          <p class="text-muted fs-6">Manage your financial operations and business metrics</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <% if current_user %>
+            <div class="d-flex flex-column align-items-md-end">
+              <p class="mb-1 text-muted small d-block d-md-inline">
+                <i class="bi bi-calendar-event"></i>
+                <%= Time.current.strftime('%B %d, %Y') %>
+              </p>
+              <p class="mb-0 fw-semibold text-dark">
+                <i class="bi bi-person-circle me-2"></i>
+                Welcome, <%= current_user.name %>
+              </p>
+            </div>
+          <% end %>
+        </div>
       </div>
-      <div class="modal-body">
-        <%= form_with url: "/create", method: :get do |form| %>
-		  <%= form.label :query, "Search for:" %>
-		  <%= form.text_field :query %>
-		  <%= form.submit "Search" %>
-		<% end %>
+    </div>
+  </div>
 
+  <div class="container-fluid px-0">
+    <!-- KPI Cards Section -->
+    <div class="row g-3 mb-4 px-3 px-md-4">
+      <div class="col-sm-6 col-lg-3">
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Total Sellers</span>
+            <span class="kpi-badge positive">
+              <i class="bi bi-arrow-up"></i> 12%
+            </span>
+          </div>
+          <div class="kpi-value"><%= Seller.count %></div>
+          <div class="kpi-footer">
+            <small class="text-muted">vs last month</small>
+          </div>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+      <div class="col-sm-6 col-lg-3">
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Active Bets</span>
+            <span class="kpi-badge negative">
+              <i class="bi bi-arrow-down"></i> 5%
+            </span>
+          </div>
+          <div class="kpi-value"><%= Bet.count %></div>
+          <div class="kpi-footer">
+            <small class="text-muted">vs last month</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-lg-3">
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Total Contacts</span>
+            <span class="kpi-badge positive">
+              <i class="bi bi-arrow-up"></i> 8%
+            </span>
+          </div>
+          <div class="kpi-value"><%= Contact.count %></div>
+          <div class="kpi-footer">
+            <small class="text-muted">vs last month</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-lg-3">
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Active Profiles</span>
+            <span class="kpi-badge positive">
+              <i class="bi bi-arrow-up"></i> 15%
+            </span>
+          </div>
+          <div class="kpi-value"><%= Profile.count %></div>
+          <div class="kpi-footer">
+            <small class="text-muted">vs last month</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="row g-4 px-3 px-md-4">
+      <!-- Left Column -->
+      <div class="col-lg-8">
+        <!-- Overview Card -->
+        <div class="finance-card mb-4">
+          <div class="finance-card-header">
+            <h5 class="mb-0">
+              <i class="bi bi-graph-up me-2"></i>
+              Business Overview
+            </h5>
+            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="dropdown">
+              <i class="bi bi-three-dots"></i>
+            </button>
+          </div>
+          <div class="finance-card-body">
+            <div class="row g-4">
+              <div class="col-sm-6">
+                <div class="metric-box">
+                  <div class="metric-icon bg-info bg-opacity-10">
+                    <i class="bi bi-shop text-info"></i>
+                  </div>
+                  <div class="metric-content">
+                    <p class="metric-label">Sellers Network</p>
+                    <h6 class="metric-value"><%= Seller.count %> Active</h6>
+                    <small class="text-success"><i class="bi bi-arrow-up"></i> Growing</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="metric-box">
+                  <div class="metric-icon bg-warning bg-opacity-10">
+                    <i class="bi bi-dice-5 text-warning"></i>
+                  </div>
+                  <div class="metric-content">
+                    <p class="metric-label">Active Transactions</p>
+                    <h6 class="metric-value"><%= Bet.count %> Bets</h6>
+                    <small class="text-muted">In Progress</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Access Section -->
+        <div class="finance-card">
+          <div class="finance-card-header">
+            <h5 class="mb-0">
+              <i class="bi bi-lightning-fill me-2"></i>
+              Quick Access
+            </h5>
+          </div>
+          <div class="finance-card-body">
+            <div class="quick-access-grid">
+              <%= link_to sellers_path, class: 'quick-access-item' do %>
+                <div class="qa-icon">
+                  <i class="bi bi-shop"></i>
+                </div>
+                <div class="qa-content">
+                  <p class="qa-title">Sellers</p>
+                  <p class="qa-value"><%= Seller.count %> Entities</p>
+                </div>
+                <i class="bi bi-chevron-right qa-arrow"></i>
+              <% end %>
+
+              <%= link_to bets_path, class: 'quick-access-item' do %>
+                <div class="qa-icon">
+                  <i class="bi bi-dice-5"></i>
+                </div>
+                <div class="qa-content">
+                  <p class="qa-title">Bets</p>
+                  <p class="qa-value"><%= Bet.count %> Active</p>
+                </div>
+                <i class="bi bi-chevron-right qa-arrow"></i>
+              <% end %>
+
+              <%= link_to contacts_path, class: 'quick-access-item' do %>
+                <div class="qa-icon">
+                  <i class="bi bi-person-lines-fill"></i>
+                </div>
+                <div class="qa-content">
+                  <p class="qa-title">Contacts</p>
+                  <p class="qa-value"><%= Contact.count %> Records</p>
+                </div>
+                <i class="bi bi-chevron-right qa-arrow"></i>
+              <% end %>
+
+              <%= link_to profiles_path, class: 'quick-access-item' do %>
+                <div class="qa-icon">
+                  <i class="bi bi-person-badge"></i>
+                </div>
+                <div class="qa-content">
+                  <p class="qa-title">Profiles</p>
+                  <p class="qa-value"><%= Profile.count %> Users</p>
+                </div>
+                <i class="bi bi-chevron-right qa-arrow"></i>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="col-lg-4">
+        <!-- Account Status Card -->
+        <div class="finance-card mb-4">
+          <div class="finance-card-header">
+            <h5 class="mb-0">
+              <i class="bi bi-shield-check me-2"></i>
+              Account Status
+            </h5>
+          </div>
+          <div class="finance-card-body">
+            <div class="status-item mb-3">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="status-label">System Health</span>
+                <span class="badge bg-success">Optimal</span>
+              </div>
+              <div class="progress" style="height: 6px;">
+                <div class="progress-bar bg-success" style="width: 100%"></div>
+              </div>
+            </div>
+
+            <div class="status-item mb-3">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="status-label">Data Integrity</span>
+                <span class="badge bg-info">99.8%</span>
+              </div>
+              <div class="progress" style="height: 6px;">
+                <div class="progress-bar bg-info" style="width: 99.8%"></div>
+              </div>
+            </div>
+
+            <div class="status-item">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="status-label">Network Activity</span>
+                <span class="badge bg-warning">Active</span>
+              </div>
+              <div class="progress" style="height: 6px;">
+                <div class="progress-bar bg-warning" style="width: 75%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions Card -->
+        <div class="finance-card">
+          <div class="finance-card-header">
+            <h5 class="mb-0">
+              <i class="bi bi-plus-circle me-2"></i>
+              Create New
+            </h5>
+          </div>
+          <div class="finance-card-body">
+            <div class="d-flex flex-column gap-2">
+              <%= link_to new_seller_path, class: 'action-btn' do %>
+                <i class="bi bi-shop"></i>
+                <span>Add Seller</span>
+              <% end %>
+
+              <%= link_to new_bet_path, class: 'action-btn' do %>
+                <i class="bi bi-plus-lg"></i>
+                <span>Create Bet</span>
+              <% end %>
+
+              <%= link_to new_contact_path, class: 'action-btn' do %>
+                <i class="bi bi-person-plus"></i>
+                <span>Add Contact</span>
+              <% end %>
+
+              <%= link_to new_profile_path, class: 'action-btn' do %>
+                <i class="bi bi-person-badge"></i>
+                <span>New Profile</span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .finance-dashboard {
+    background: linear-gradient(135deg, #f5f7fa 0%, #f9fafb 100%);
+    min-height: 100vh;
+    padding: 2rem 0;
+  }
+
+  .dashboard-header {
+    background: white;
+    padding: 2rem;
+    border-bottom: 1px solid #e5e7eb;
+    margin: -2rem 0 2rem 0;
+  }
+
+  /* KPI Cards */
+  .kpi-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #2563eb, #3b82f6);
+  }
+
+  .kpi-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .kpi-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .kpi-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .kpi-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .kpi-badge.positive {
+    background: #d1f5e6;
+    color: #10b981;
+  }
+
+  .kpi-badge.negative {
+    background: #fee2e2;
+    color: #ef4444;
+  }
+
+  .kpi-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+  }
+
+  .kpi-footer {
+    color: #9ca3af;
+    font-size: 0.875rem;
+  }
+
+  /* Finance Cards */
+  .finance-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .finance-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .finance-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .finance-card-header h5 {
+    color: #1f2937;
+    font-weight: 700;
+  }
+
+  .finance-card-body {
+    padding: 1.5rem;
+  }
+
+  /* Metric Box */
+  .metric-box {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f9fafb;
+    border-radius: 8px;
+  }
+
+  .metric-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .metric-content {
+    flex: 1;
+  }
+
+  .metric-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+  }
+
+  .metric-value {
+    color: #1f2937;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+
+  /* Quick Access Grid */
+  .quick-access-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .quick-access-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f9fafb;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+  }
+
+  .quick-access-item:hover {
+    background: #f3f4f6;
+    border-color: #e5e7eb;
+    transform: translateX(4px);
+  }
+
+  .qa-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    color: white;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .qa-content {
+    flex: 1;
+  }
+
+  .qa-title {
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .qa-value {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin: 0;
+  }
+
+  .qa-arrow {
+    color: #d1d5db;
+    transition: all 0.3s ease;
+  }
+
+  .quick-access-item:hover .qa-arrow {
+    color: #2563eb;
+    transform: translateX(4px);
+  }
+
+  /* Status Items */
+  .status-item {
+    padding-bottom: 1rem;
+  }
+
+  .status-item:last-child {
+    padding-bottom: 0;
+  }
+
+  .status-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  .progress {
+    background: #e5e7eb;
+    border-radius: 3px;
+  }
+
+  /* Action Buttons */
+  .action-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem;
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+  }
+
+  .action-btn:hover {
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    color: white;
+  }
+
+  .action-btn i {
+    font-size: 1.1rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .dashboard-header {
+      padding: 1.5rem;
+    }
+
+    .finance-dashboard {
+      padding: 1rem 0;
+    }
+
+    .kpi-value {
+      font-size: 1.75rem;
+    }
+
+    .quick-access-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .quick-access-item {
+      flex-direction: column;
+      text-align: center;
+      padding: 1.25rem 0.75rem;
+    }
+
+    .qa-icon {
+      width: 36px;
+      height: 36px;
+      font-size: 1rem;
+    }
+
+    .qa-arrow {
+      display: none;
+    }
+  }
+</style>
         <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>

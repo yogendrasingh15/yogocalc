@@ -1,0 +1,251 @@
+@import 'variables';
+
+// Card components
+.card {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-sm;
+  transition: all $transition-duration ease;
+
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+
+  .card-header {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    font-weight: 600;
+    color: $dark;
+    padding: $spacing-md;
+  }
+
+  .card-body {
+    padding: $spacing-md;
+  }
+}
+
+// Button improvements
+.btn {
+  font-weight: 600;
+  border-radius: $border-radius;
+  transition: all $transition-duration ease;
+  border: none;
+
+  &.btn-primary {
+    background: linear-gradient(135deg, $primary 0%, darken($primary, 10%) 100%);
+    
+    &:hover {
+      background: linear-gradient(135deg, darken($primary, 5%) 0%, darken($primary, 15%) 100%);
+      transform: translateY(-1px);
+      box-shadow: $shadow-md;
+    }
+  }
+
+  &.btn-outline-secondary {
+    color: $secondary;
+    border-color: $secondary;
+
+    &:hover {
+      background: $secondary;
+      border-color: $secondary;
+    }
+  }
+
+  &.btn-sm {
+    padding: 0.375rem 0.75rem;
+    font-size: $font-size-sm;
+  }
+}
+
+// Form improvements
+.form-group {
+  margin-bottom: $spacing-md;
+
+  label {
+    font-weight: 600;
+    color: $dark;
+    margin-bottom: $spacing-sm;
+    display: block;
+  }
+
+  .form-control,
+  .form-select {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: $border-radius;
+    padding: $spacing-sm;
+    font-size: $font-size-base;
+    transition: all $transition-duration ease;
+
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    &:disabled {
+      background-color: #f3f4f6;
+      cursor: not-allowed;
+    }
+  }
+
+  .form-text {
+    font-size: $font-size-sm;
+    color: $secondary;
+    margin-top: 0.25rem;
+  }
+
+  &.has-error {
+    .form-control,
+    .form-select {
+      border-color: $danger;
+
+      &:focus {
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+      }
+    }
+
+    .invalid-feedback {
+      display: block;
+      color: $danger;
+      font-size: $font-size-sm;
+      margin-top: 0.25rem;
+    }
+  }
+}
+
+// Table improvements
+.table {
+  border-collapse: collapse;
+
+  thead {
+    background: #f8fafc;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.06);
+
+    th {
+      font-weight: 600;
+      color: $dark;
+      padding: $spacing-md;
+      text-align: left;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      transition: background-color $transition-duration ease;
+
+      &:hover {
+        background-color: rgba(37, 99, 235, 0.02);
+      }
+
+      td {
+        padding: $spacing-md;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+// Badge styling
+.badge {
+  padding: 0.375rem 0.75rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: $font-size-sm;
+
+  &.badge-primary {
+    background: rgba(37, 99, 235, 0.1);
+    color: darken($primary, 10%);
+  }
+
+  &.badge-success {
+    background: rgba(16, 185, 129, 0.1);
+    color: darken($success, 10%);
+  }
+
+  &.badge-warning {
+    background: rgba(245, 158, 11, 0.1);
+    color: darken($warning, 10%);
+  }
+
+  &.badge-danger {
+    background: rgba(239, 68, 68, 0.1);
+    color: darken($danger, 10%);
+  }
+}
+
+// Modal improvements
+.modal-content {
+  border: none;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-xl;
+
+  .modal-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    padding: $spacing-lg;
+
+    .modal-title {
+      font-weight: 700;
+      color: $dark;
+    }
+  }
+
+  .modal-body {
+    padding: $spacing-lg;
+  }
+
+  .modal-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    padding: $spacing-lg;
+  }
+}
+
+// Breadcrumb styling
+.breadcrumb {
+  background: transparent;
+  padding: 0;
+  margin-bottom: $spacing-md;
+
+  .breadcrumb-item {
+    color: $secondary;
+
+    &.active {
+      color: $dark;
+      font-weight: 600;
+    }
+
+    a {
+      color: $primary;
+      text-decoration: none;
+      transition: color $transition-duration ease;
+
+      &:hover {
+        color: darken($primary, 10%);
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// Empty state
+.empty-state {
+  text-align: center;
+  padding: $spacing-2xl $spacing-md;
+  color: $secondary;
+
+  .empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: $spacing-md;
+    opacity: 0.5;
+  }
+
+  .empty-state-title {
+    font-size: $font-size-xl;
+    font-weight: 700;
+    color: $dark;
+    margin-bottom: $spacing-sm;
+  }
+
+  .empty-state-text {
+    margin-bottom: $spacing-lg;
+  }
+}

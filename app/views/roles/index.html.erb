@@ -1,14 +1,36 @@
-<p style="color: green"><%= notice %></p>
+<div class="container-fluid p-4">
+  <%= render 'shared/page_header', title: 'Roles', subtitle: 'Manage user roles and permissions', action_button: [{ label: '+ New Role', path: new_role_path, style: 'primary' }] %>
 
-<h1>Roles</h1>
-
-<div id="roles">
-  <% @roles.each do |role| %>
-    <%= render role %>
-    <p>
-      <%= link_to "Show this role", role %>
-    </p>
+  <% if @roles.empty? %>
+    <div class="card border-0 shadow-sm">
+      <div class="card-body text-center py-5">
+        <div class="empty-state">
+          <div class="empty-state-icon">
+            <i class="bi bi-shield-check"></i>
+          </div>
+          <h5 class="empty-state-title">No roles found</h5>
+          <p class="empty-state-text">Create your first role to get started.</p>
+          <%= link_to 'Create Role', new_role_path, class: 'btn btn-primary btn-sm' %>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div class="row g-3">
+      <% @roles.each do |role| %>
+        <div class="col-md-6 col-lg-4">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title fw-bold mb-3">Role Information</h5>
+              <%= render role %>
+              <div class="d-flex gap-2 mt-4">
+                <%= link_to 'View', role_path(role), class: 'btn btn-outline-secondary btn-sm flex-grow-1' %>
+                <%= link_to 'Edit', edit_role_path(role), class: 'btn btn-outline-primary btn-sm flex-grow-1' %>
+                <%= link_to 'Delete', role_path(role), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger btn-sm flex-grow-1' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
   <% end %>
 </div>
-
-<%= link_to "New role", new_role_path %>

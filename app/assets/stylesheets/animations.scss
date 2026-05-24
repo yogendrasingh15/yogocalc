@@ -1,0 +1,166 @@
+@import 'variables';
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+// Apply animations to common elements
+.card {
+  animation: fadeIn $transition-duration ease-out;
+}
+
+.alert {
+  animation: slideIn $transition-duration ease-out;
+}
+
+// Loading skeleton
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+
+  &.skeleton-text {
+    height: 1rem;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+
+    &.skeleton-title {
+      height: 1.5rem;
+      width: 40%;
+    }
+  }
+
+  &.skeleton-avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+  }
+}
+
+// Loading spinner
+.spinner-custom {
+  border: 3px solid rgba(37, 99, 235, 0.1);
+  border-radius: 50%;
+  border-top: 3px solid $primary;
+  width: 2rem;
+  height: 2rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Smooth transitions
+* {
+  &[class*='btn'] {
+    transition: all $transition-duration ease;
+  }
+
+  &[class*='nav-link'] {
+    transition: all $transition-duration ease;
+  }
+}
+
+// Hover effects
+.hoverable {
+  transition: all $transition-duration ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+}
+
+// Smooth page transitions
+main {
+  animation: fadeIn $transition-duration ease-out;
+}
+
+// Accessibility - focus states
+:focus-visible {
+  outline: 2px solid $primary;
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid $primary;
+  outline-offset: 2px;
+}
+
+// Skip to main content link (accessibility)
+.skip-to-main {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: $primary;
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 0 0 $border-radius $border-radius;
+
+  &:focus {
+    top: 0;
+  }
+}
+
+// Reduced motion respect
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// Dark mode support (future-proofing)
+@media (prefers-color-scheme: dark) {
+  body {
+    // Styles will be added when dark mode is implemented
+  }
+}

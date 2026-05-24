@@ -1,32 +1,60 @@
-<h1>Profiles</h1>
+<div class="container-fluid p-4">
+  <%= render 'shared/page_header', title: 'Profiles', subtitle: 'View all user profiles', action_button: [{ label: '+ New Profile', path: new_profile_path, style: 'primary' }] %>
 
-<p><%= link_to 'New Profile', new_profile_path, class: 'btn btn-primary' %></p>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Mobile</th>
-      <th>Pincode</th>
-      <th>Gender</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @profiles.each do |profile| %>
-      <tr>
-        <td><%= profile.name %></td>
-        <td><%= profile.email %></td>
-        <td><%= profile.mobile %></td>
-        <td><%= profile.pincode %></td>
-        <td><%= profile.gender %></td>
-        <td>
-          <%= link_to 'Show', profile_path(profile), class: 'btn btn-sm btn-secondary' %>
-          <%= link_to 'Edit', edit_profile_path(profile), class: 'btn btn-sm btn-secondary' %>
-          <%= link_to 'Destroy', profile_path(profile), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
-        </td>
-      </tr>
+  <div class="card border-0 shadow-sm">
+    <% if @profiles.empty? %>
+      <div class="card-body text-center py-5">
+        <div class="empty-state">
+          <div class="empty-state-icon">
+            <i class="bi bi-person-badge"></i>
+          </div>
+          <h5 class="empty-state-title">No profiles found</h5>
+          <p class="empty-state-text">Create your first user profile.</p>
+          <%= link_to 'Create Profile', new_profile_path, class: 'btn btn-primary btn-sm' %>
+        </div>
+      </div>
+    <% else %>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Mobile</th>
+              <th scope="col">Gender</th>
+              <th scope="col" style="width: 120px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @profiles.each do |profile| %>
+              <tr>
+                <td>
+                  <strong><%= profile.name %></strong>
+                </td>
+                <td>
+                  <%= link_to profile.email, "mailto:#{profile.email}", class: 'text-decoration-none text-muted' %>
+                </td>
+                <td>
+                  <i class="bi bi-telephone"></i>
+                  <%= profile.mobile %>
+                </td>
+                <td>
+                  <span class="badge badge-secondary">
+                    <%= profile.gender %>
+                  </span>
+                </td>
+                <td>
+                  <div class="btn-group btn-group-sm" role="group">
+                    <%= link_to 'View', profile_path(profile), class: 'btn btn-outline-secondary' %>
+                    <%= link_to 'Edit', edit_profile_path(profile), class: 'btn btn-outline-primary' %>
+                    <%= link_to 'Delete', profile_path(profile), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger' %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     <% end %>
-  </tbody>
-</table>
+  </div>
+</div>

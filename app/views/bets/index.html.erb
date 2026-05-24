@@ -1,14 +1,36 @@
-<p style="color: green"><%= notice %></p>
+<div class="container-fluid p-4">
+  <%= render 'shared/page_header', title: 'Bets', subtitle: 'View and manage all active bets', action_button: [{ label: '+ New Bet', path: new_bet_path, style: 'primary' }] %>
 
-<h1>Bets</h1>
-
-<div id="bets">
-  <% @bets.each do |bet| %>
-    <%= render bet %>
-    <p>
-      <%= link_to "Show this bet", bet %>
-    </p>
+  <% if @bets.empty? %>
+    <div class="card border-0 shadow-sm">
+      <div class="card-body text-center py-5">
+        <div class="empty-state">
+          <div class="empty-state-icon">
+            <i class="bi bi-dice-5"></i>
+          </div>
+          <h5 class="empty-state-title">No bets yet</h5>
+          <p class="empty-state-text">Create your first bet to get started.</p>
+          <%= link_to 'Create Bet', new_bet_path, class: 'btn btn-primary btn-sm' %>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div class="row g-3">
+      <% @bets.each do |bet| %>
+        <div class="col-md-6 col-lg-4">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title fw-bold">Bet Details</h5>
+              <%= render bet %>
+              <div class="d-flex gap-2 mt-3">
+                <%= link_to 'View', bet_path(bet), class: 'btn btn-outline-secondary btn-sm flex-grow-1' %>
+                <%= link_to 'Edit', edit_bet_path(bet), class: 'btn btn-outline-primary btn-sm flex-grow-1' %>
+                <%= link_to 'Delete', bet_path(bet), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger btn-sm flex-grow-1' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
   <% end %>
 </div>
-
-<%= link_to "New bet", new_bet_path %>

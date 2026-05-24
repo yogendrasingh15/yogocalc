@@ -1,14 +1,36 @@
-<p style="color: green"><%= notice %></p>
+<div class="container-fluid p-4">
+  <%= render 'shared/page_header', title: 'Contacts', subtitle: 'Manage your contact list', action_button: [{ label: '+ New Contact', path: new_contact_path, style: 'primary' }] %>
 
-<h1>Contacts</h1>
-
-<div id="contacts">
-  <% @contacts.each do |contact| %>
-    <%= render contact %>
-    <p>
-      <%= link_to "Show this contact", contact %>
-    </p>
+  <% if @contacts.empty? %>
+    <div class="card border-0 shadow-sm">
+      <div class="card-body text-center py-5">
+        <div class="empty-state">
+          <div class="empty-state-icon">
+            <i class="bi bi-person-lines-fill"></i>
+          </div>
+          <h5 class="empty-state-title">No contacts yet</h5>
+          <p class="empty-state-text">Add your first contact to get started.</p>
+          <%= link_to 'Create Contact', new_contact_path, class: 'btn btn-primary btn-sm' %>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div class="row g-3">
+      <% @contacts.each do |contact| %>
+        <div class="col-md-6 col-lg-4">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title fw-bold mb-3">Contact Information</h5>
+              <%= render contact %>
+              <div class="d-flex gap-2 mt-4">
+                <%= link_to 'View', contact_path(contact), class: 'btn btn-outline-secondary btn-sm flex-grow-1' %>
+                <%= link_to 'Edit', edit_contact_path(contact), class: 'btn btn-outline-primary btn-sm flex-grow-1' %>
+                <%= link_to 'Delete', contact_path(contact), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger btn-sm flex-grow-1' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
   <% end %>
 </div>
-
-<%= link_to "New contact", new_contact_path %>
