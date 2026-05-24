@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :nominees
   resources :contacts
   resources :bets
   resources :roles

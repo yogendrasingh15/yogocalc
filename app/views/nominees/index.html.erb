@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Nominees</h1>
+
+<div id="nominees">
+  <% @nominees.each do |nominee| %>
+    <%= render nominee %>
+    <p>
+      <%= link_to "Show this nominee", nominee %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New nominee", new_nominee_path %>

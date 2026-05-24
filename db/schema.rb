@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_10_31_121000) do
+ActiveRecord::Schema[7.0].define(version: 2026_05_24_103729) do
   create_table "bets", force: :cascade do |t|
     t.float "amount"
     t.integer "match_id"
@@ -35,6 +35,23 @@ ActiveRecord::Schema[7.0].define(version: 2025_10_31_121000) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["role_id"], name: "index_contacts_on_role_id"
+  end
+
+  create_table "nominees", force: :cascade do |t|
+    t.string "name"
+    t.string "category"
+    t.string "description"
+    t.string "image_url"
+    t.string "aadhar_number"
+    t.string "pan_number"
+    t.string "mobile_number"
+    t.string "email"
+    t.string "address"
+    t.string "city"
+    t.string "state"
+    t.string "pincode"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "profiles", force: :cascade do |t|
