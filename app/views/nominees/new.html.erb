@@ -1,9 +1,19 @@
-<h1>New nominee</h1>
-
-<%= render "form", nominee: @nominee %>
-
-<br>
-
-<div>
-  <%= link_to "Back to nominees", nominees_path %>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-xl-10">
+      <div class="card shadow-sm nominee-card border-0">
+        <div class="card-header bg-white border-bottom px-4 py-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3">
+            <div>
+              <h1 class="h3 mb-1">New nominee</h1>
+              <p class="text-muted mb-0">Add a nominee with full profile and contact details.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-body px-4 py-4">
+          <%= render "form", nominee: @nominee %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

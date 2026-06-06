@@ -1,2 +1,43 @@
-<div id="<%= dom_id nominee %>">
+<div class="card nominee-list-card h-100 shadow-sm border-0">
+  <div class="card-body d-flex flex-column">
+    <div class="d-flex align-items-start gap-3 mb-3">
+      <% if nominee.image_url.present? %>
+        <img src="<%= nominee.image_url %>" alt="<%= nominee.name %>" class="nominee-list-avatar flex-shrink-0" />
+      <% else %>
+        <div class="nominee-list-avatar-placeholder flex-shrink-0">
+          <i class="bi bi-person-fill"></i>
+        </div>
+      <% end %>
+
+      <div class="w-100">
+        <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+          <h2 class="h5 mb-1"><%= nominee.name.presence || 'Unnamed nominee' %></h2>
+          <span class="badge bg-info text-dark"><%= nominee.category.presence || 'Uncategorized' %></span>
+        </div>
+        <p class="text-muted small mb-2"><%= nominee.email.presence || 'No email provided' %></p>
+        <div class="d-flex flex-wrap gap-2">
+          <span class="badge bg-light text-dark">Mobile: <%= nominee.mobile_number.presence || 'N/A' %></span>
+          <span class="badge bg-light text-dark">PIN: <%= nominee.pincode.presence || 'N/A' %></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <p class="text-secondary small mb-2"><strong>Location:</strong> <%= [nominee.city, nominee.state].compact.reject(&:blank?).join(', ').presence || 'Not specified' %></p>
+      <p class="text-secondary small mb-2"><strong>Aadhar:</strong> <%= nominee.aadhar_number.presence || 'Not provided' %></p>
+      <p class="text-secondary small mb-2"><strong>PAN:</strong> <%= nominee.pan_number.presence || 'Not provided' %></p>
+      <p class="text-secondary small mb-2"><strong>Address:</strong> <%= nominee.address.presence || 'Not provided' %></p>
+    </div>
+
+    <div class="mb-4">
+      <h3 class="h6 mb-2">About nominee</h3>
+      <p class="text-muted small mb-0"><%= truncate(nominee.description.presence || 'No description added.', length: 140) %></p>
+    </div>
+
+    <div class="mt-auto d-flex flex-column flex-sm-row gap-2">
+      <%= link_to 'View', nominee_path(nominee), class: 'btn btn-outline-primary btn-sm w-100 w-sm-auto' %>
+      <%= link_to 'Edit', edit_nominee_path(nominee), class: 'btn btn-primary btn-sm w-100 w-sm-auto' %>
+      <%= button_to 'Delete', nominee_path(nominee), method: :delete, data: { confirm: 'Delete this nominee?' }, class: 'btn btn-outline-danger btn-sm w-100 w-sm-auto' %>
+    </div>
+  </div>
 </div>

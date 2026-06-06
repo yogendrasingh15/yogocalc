@@ -199,6 +199,237 @@
   }
 }
 
+/* Nominee form page */
+.nominee-card {
+  border-radius: $border-radius-lg;
+}
+
+.nominee-form {
+  .section-heading {
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $dark;
+    margin-bottom: $spacing-xs;
+  }
+
+  .section-block {
+    border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+    padding-bottom: $spacing-sm;
+    margin-bottom: $spacing-md;
+  }
+
+  .form-group {
+    margin-bottom: $spacing-md;
+
+    .form-text {
+      color: $secondary;
+    }
+  }
+
+  .form-control {
+    background: #ffffff;
+    border: 1px solid rgba(148, 163, 184, 0.32);
+    padding: 0.95rem 1rem;
+    border-radius: 0.85rem;
+    transition: border-color $transition-duration ease, box-shadow $transition-duration ease;
+
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+  }
+
+  .btn-primary {
+    min-width: 180px;
+  }
+}
+
+/* Nominee list and show styles */
+.nominee-list-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: $spacing-lg;
+}
+
+.nominee-list-card {
+  border-radius: $border-radius-lg;
+}
+
+.nominee-summary-list {
+  li {
+    color: $dark;
+    font-size: $font-size-sm;
+    margin-bottom: 0.35rem;
+  }
+}
+
+.nominee-show-card {
+  border-radius: $border-radius-lg;
+}
+
+.nominee-profile-card {
+  min-height: 100%;
+}
+
+.nominee-avatar {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+.nominee-avatar-placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(37, 99, 235, 0.1);
+  color: $primary;
+  font-size: 2rem;
+}
+
+.detail-label {
+  font-size: 0.75rem;
+  color: $secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.35rem;
+}
+
+.detail-value {
+  font-weight: 700;
+  color: $dark;
+}
+
+.detail-block {
+  min-height: 100%;
+}
+
+.nominee-list-avatar {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+}
+
+.nominee-list-avatar-placeholder {
+  width: 72px;
+  height: 72px;
+  border-radius: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(37, 99, 235, 0.12);
+  color: $primary;
+  font-size: 1.5rem;
+}
+
+.nominee-list-card {
+  border-radius: $border-radius-lg;
+  transition: transform $transition-duration ease, box-shadow $transition-duration ease;
+}
+
+.nominee-list-card:hover {
+  transform: translateY(-3px);
+  box-shadow: $shadow-md;
+}
+
+.page-nominee-index {
+  min-height: calc(100vh - 64px);
+  background: #f4f7fb;
+}
+
+.summary-card {
+  background: #ffffff;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-sm;
+  transition: transform $transition-duration ease, box-shadow $transition-duration ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-2px);
+  box-shadow: $shadow-md;
+}
+
+.summary-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: $dark;
+}
+
+/* Login page styles */
+.login-page {
+  min-height: calc(100vh - 64px);
+  padding-bottom: $spacing-lg;
+  background: linear-gradient(180deg, rgba(37, 99, 235, 0.08), rgba(248, 250, 252, 0.95));
+}
+
+.login-card {
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+}
+
+.login-card-hero {
+  background: linear-gradient(135deg, #c2cadc 0%, #bcc2cb 100%);
+  min-height: 220px;
+}
+
+.login-card-hero .badge {
+  font-size: $font-size-sm;
+  padding: 0.65rem 0.95rem;
+}
+
+.feature-item {
+  gap: $spacing-sm;
+}
+
+.feature-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.login-card-form {
+  min-height: 420px;
+}
+
+.login-card-form h2 {
+  font-size: 2rem;
+}
+
+.login-card-form .form-label {
+  font-weight: 600;
+  color: $dark;
+}
+
+.login-card-form .form-control {
+  border-radius: $border-radius;
+  padding: 0.95rem 1rem;
+}
+
+.login-card-form .btn-primary {
+  padding: 0.95rem 1rem;
+}
+
+.form-link {
+  color: $primary;
+  transition: color $transition-duration ease;
+}
+
+.form-link:hover {
+  color: darken($primary, 10%);
+  text-decoration: none;
+}
+
 // Breadcrumb styling
 .breadcrumb {
   background: transparent;

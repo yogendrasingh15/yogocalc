@@ -1,17 +1,104 @@
-<%= form_with(model: nominee) do |form| %>
+<%= form_with(model: nominee, local: true, html: { class: 'nominee-form' }) do |form| %>
   <% if nominee.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(nominee.errors.count, "error") %> prohibited this nominee from being saved:</h2>
-
-      <ul>
-        <% nominee.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+    <div class="alert alert-danger">
+      <h5 class="mb-2"><%= pluralize(nominee.errors.count, 'error') %> prohibited this nominee from being saved:</h5>
+      <ul class="mb-0">
+        <% nominee.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.submit %>
+  <div class="row gy-4">
+    <div class="col-lg-6">
+      <div class="section-block mb-4">
+        <h2 class="section-heading">Nominee details</h2>
+        <p class="text-muted mb-3">Fill in the nominee profile information.</p>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :name, 'Nominee name' %>
+        <%= form.text_field :name, class: 'form-control', placeholder: 'Enter full name' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :category, 'Category' %>
+        <%= form.text_field :category, class: 'form-control', placeholder: 'E.g. Community Leader, Volunteer' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :description, 'Description' %>
+        <%= form.text_area :description, rows: 5, class: 'form-control', placeholder: 'Short summary of the nominee’s contributions' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :image_url, 'Image URL' %>
+        <%= form.url_field :image_url, class: 'form-control', placeholder: 'https://example.com/photo.jpg' %>
+        <small class="form-text">Optional: paste a public image link.</small>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="section-block mb-4">
+        <h2 class="section-heading">Contact & verification</h2>
+        <p class="text-muted mb-3">Use accurate contact and identity information.</p>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :aadhar_number, 'Aadhar number' %>
+        <%= form.text_field :aadhar_number, class: 'form-control', placeholder: 'XXXX-XXXX-XXXX' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :pan_number, 'PAN number' %>
+        <%= form.text_field :pan_number, class: 'form-control', placeholder: 'ABCDE1234F' %>
+      </div>
+
+      <div class="row gx-3">
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= form.label :mobile_number, 'Mobile number' %>
+            <%= form.telephone_field :mobile_number, class: 'form-control', placeholder: '+91 98765 43210' %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= form.label :email, 'Email address' %>
+            <%= form.email_field :email, class: 'form-control', placeholder: 'name@example.com' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :address, 'Address' %>
+        <%= form.text_area :address, rows: 3, class: 'form-control', placeholder: 'House number, street, landmark' %>
+      </div>
+
+      <div class="row gx-3">
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= form.label :city, 'City' %>
+            <%= form.text_field :city, class: 'form-control', placeholder: 'City' %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= form.label :state, 'State' %>
+            <%= form.text_field :state, class: 'form-control', placeholder: 'State' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :pincode, 'Pincode' %>
+        <%= form.text_field :pincode, class: 'form-control', placeholder: 'PIN Code' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-4">
+    <%= link_to 'Cancel', nominees_path, class: 'btn btn-outline-secondary' %>
+    <%= form.submit nominee.persisted? ? 'Update nominee' : 'Create nominee', class: 'btn btn-primary' %>
   </div>
 <% end %>

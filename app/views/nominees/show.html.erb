@@ -1,10 +1,112 @@
-<p style="color: green"><%= notice %></p>
+<div class="container py-5">
+  <div class="card shadow-sm nominee-show-card border-0">
+    <div class="card-header bg-white border-bottom px-4 py-4">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3">
+        <div>
+          <h1 class="h3 mb-1"><%= @nominee.name.presence || 'Nominee details' %></h1>
+          <p class="text-muted mb-0">A complete profile for this nominee, including contact and verification details.</p>
+        </div>
 
-<%= render @nominee %>
+        <div class="d-flex flex-wrap gap-2">
+          <%= link_to 'Edit', edit_nominee_path(@nominee), class: 'btn btn-outline-primary' %>
+          <%= link_to 'Back to list', nominees_path, class: 'btn btn-secondary' %>
+        </div>
+      </div>
+    </div>
 
-<div>
-  <%= link_to "Edit this nominee", edit_nominee_path(@nominee) %> |
-  <%= link_to "Back to nominees", nominees_path %>
+    <div class="card-body px-4 py-4">
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="bg-light rounded-4 p-4 h-100 nominee-profile-card">
+            <div class="text-center mb-4">
+              <% if @nominee.image_url.present? %>
+                <img src="<%= @nominee.image_url %>" alt="<%= @nominee.name %>" class="img-fluid nominee-avatar mb-3" />
+              <% else %>
+                <div class="nominee-avatar-placeholder mb-3">
+                  <i class="bi bi-person-fill"></i>
+                </div>
+              <% end %>
+              <h2 class="h5 mb-1"><%= @nominee.name.presence || 'Unnamed nominee' %></h2>
+              <p class="text-muted mb-2"><%= @nominee.category.presence || 'Uncategorized' %></p>
+              <div>
+                <span class="badge bg-primary">Nominee</span>
+              </div>
+            </div>
 
-  <%= button_to "Destroy this nominee", @nominee, method: :delete %>
+            <div class="border-top pt-4">
+              <div class="mb-3">
+                <div class="detail-label">Contact</div>
+                <div><strong><%= @nominee.mobile_number.presence || '-' %></strong></div>
+                <div class="text-muted"><%= @nominee.email.presence || '-' %></div>
+              </div>
+              <div class="mb-3">
+                <div class="detail-label">Location</div>
+                <div><%= [@nominee.city, @nominee.state].compact.reject(&:blank?).join(', ').presence || '-' %></div>
+              </div>
+              <div class="mb-3">
+                <div class="detail-label">Pincode</div>
+                <div><%= @nominee.pincode.presence || '-' %></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <div class="detail-block p-3 rounded-4 bg-white border">
+                <div class="detail-label">Aadhar number</div>
+                <div class="detail-value"><%= @nominee.aadhar_number.presence || 'Not provided' %></div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="detail-block p-3 rounded-4 bg-white border">
+                <div class="detail-label">PAN number</div>
+                <div class="detail-value"><%= @nominee.pan_number.presence || 'Not provided' %></div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="detail-block p-3 rounded-4 bg-white border">
+                <div class="detail-label">Email</div>
+                <div class="detail-value"><%= @nominee.email.presence || 'Not provided' %></div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="detail-block p-3 rounded-4 bg-white border">
+                <div class="detail-label">Mobile</div>
+                <div class="detail-value"><%= @nominee.mobile_number.presence || 'Not provided' %></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <h2 class="h5 mb-3">About nominee</h2>
+            <p class="text-muted"><%= @nominee.description.presence || 'No description added for this nominee yet.' %></p>
+          </div>
+
+          <div class="mt-4">
+            <h2 class="h5 mb-3">Verification</h2>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <div class="detail-block p-3 rounded-4 bg-white border">
+                  <div class="detail-label">City</div>
+                  <div class="detail-value"><%= @nominee.city.presence || 'N/A' %></div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="detail-block p-3 rounded-4 bg-white border">
+                  <div class="detail-label">State</div>
+                  <div class="detail-value"><%= @nominee.state.presence || 'N/A' %></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4 d-flex flex-wrap gap-2">
+    <%= button_to 'Delete nominee', @nominee, method: :delete, data: { confirm: 'Are you sure you want to delete this nominee?' }, class: 'btn btn-danger' %>
+  </div>
 </div>
