@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top header-navbar">
-  <div class="container-fluid px-3 px-md-4">
+  <div class="container-fluid px-3 px-md-4 d-flex justify-content-between align-items-center">
     <!-- Brand -->
     <%= link_to root_path, class: 'navbar-brand d-flex align-items-center fw-bold' do %>
       <div class="brand-icon me-3">
@@ -10,6 +10,18 @@
         <div class="brand-tagline">Reinvent yourself</div>
       </div>
     <% end %>
+    
+    <div class="d-flex align-items-center">
+      <% if user_signed_in? %>
+        <div class="me-3 d-none d-md-block">
+          Signed in as <strong><%= current_user.name %></strong>
+        </div>
+        <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn btn-outline-secondary btn-sm' %>
+      <% else %>
+        <%= link_to 'Sign In', new_user_session_path, class: 'btn btn-primary btn-sm me-2' %>
+        <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-outline-primary btn-sm' %>
+      <% end %>
+    </div>
   </div>
 </nav>
 
