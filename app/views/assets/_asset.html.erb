@@ -1,0 +1,25 @@
+<div id="<%= dom_id asset %>">
+  <p>
+    <strong>Title:</strong>
+    <%= asset.title %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= asset.description %>
+  </p>
+
+  <% if asset.file.attached? %>
+    <% if asset.file.image? %>
+      <p>
+        <strong>Preview:</strong><br>
+        <%= image_tag asset.file, style: 'max-width: 240px; height: auto;' %>
+      </p>
+    <% end %>
+
+    <p>
+      <strong>File:</strong>
+      <%= link_to asset.file.filename.to_s, asset.file_url, target: '_blank', rel: 'noopener' %>
+    </p>
+  <% end %>
+</div>

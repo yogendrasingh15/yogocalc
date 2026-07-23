@@ -1,5 +1,48 @@
 <div class="container-fluid p-4">
-  <%= render 'shared/page_header', title: 'Contacts', subtitle: 'Manage your contact list', action_button: [{ label: '+ New Contact', path: new_contact_path, style: 'primary' }] %>
+  <%= render 'shared/page_header', title: 'Contacts', subtitle: 'Manage your contact list and keep everyone organized in one place', action_button: [{ label: '+ Add Contact', path: new_contact_path, style: 'primary' }] %>
+
+  <div class="card mb-4 border-0 shadow-sm">
+    <div class="card-body">
+      <div class="row align-items-center gy-3">
+        <div class="col-md-8">
+          <h2 class="h5 fw-semibold mb-1">Search and filter contacts</h2>
+          <p class="text-muted mb-0">Quickly locate contacts by name, email, mobile, address, role or gender.</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+          <%= link_to 'Add contact', new_contact_path, class: 'btn btn-primary text-white' %>
+        </div>
+      </div>
+
+      <%= form_with url: contacts_path, method: :get, local: true, class: 'row g-3 mt-3 align-items-end' do |form| %>
+        <div class="col-lg-4">
+          <%= form.label :q, 'Search', class: 'form-label visually-hidden' %>
+          <%= form.search_field :q, value: params[:q], class: 'form-control', placeholder: 'Search by name, email, mobile or address' %>
+        </div>
+
+        <div class="col-lg-3">
+          <%= form.label :role_id, 'Role', class: 'form-label visually-hidden' %>
+          <%= form.collection_select :role_id, @roles, :id, :name, { prompt: 'All roles' }, class: 'form-select' %>
+        </div>
+
+        <div class="col-lg-3">
+          <%= form.label :gender, 'Gender', class: 'form-label visually-hidden' %>
+          <%= form.select :gender, options_for_select([['All genders', ''], ['Male', 'Male'], ['Female', 'Female'], ['Other', 'Other']], params[:gender]), {}, class: 'form-select' %>
+        </div>
+
+        <div class="col-lg-2 d-grid gap-2">
+          <%= form.submit 'Apply', class: 'btn btn-primary text-white' %>
+          <%= link_to 'Reset', contacts_path, class: 'btn btn-secondary text-white' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <% if params[:q].present? || params[:role_id].present? || params[:gender].present? %>
+    <div class="mb-3 d-flex flex-wrap align-items-center gap-2">
+      <span class="badge bg-secondary">Filters active</span>
+      <span class="text-muted"><%= pluralize(@contacts.count, 'contact') %> showing</span>
+    </div>
+  <% end %>
 
   <% if @contacts.empty? %>
     <div class="card border-0 shadow-sm">
@@ -8,29 +51,51 @@
           <div class="empty-state-icon">
             <i class="bi bi-person-lines-fill"></i>
           </div>
-          <h5 class="empty-state-title">No contacts yet</h5>
-          <p class="empty-state-text">Add your first contact to get started.</p>
-          <%= link_to 'Create Contact', new_contact_path, class: 'btn btn-primary btn-sm' %>
+          <h5 class="empty-state-title">No contacts found</h5>
+          <p class="empty-state-text">Refine your search, remove filters, or create a new contact.</p>
+          <%= link_to 'Create Contact', new_contact_path, class: 'btn btn-primary btn-sm text-white' %>
         </div>
       </div>
     </div>
   <% else %>
-    <div class="row g-3">
-      <% @contacts.each do |contact| %>
-        <div class="col-md-6 col-lg-4">
-          <div class="card border-0 shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="card-title fw-bold mb-3">Contact Information</h5>
-              <%= render contact %>
-              <div class="d-flex gap-2 mt-4">
-                <%= link_to 'View', contact_path(contact), class: 'btn btn-outline-secondary btn-sm flex-grow-1' %>
-                <%= link_to 'Edit', edit_contact_path(contact), class: 'btn btn-outline-primary btn-sm flex-grow-1' %>
-                <%= link_to 'Delete', contact_path(contact), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger btn-sm flex-grow-1' %>
-              </div>
-            </div>
-          </div>
-        </div>
-      <% end %>
+    <div class="card border-0 shadow-sm">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Contact</th>
+              <th scope="col">Role</th>
+              <th scope="col">Gender</th>
+              <th scope="col">Mobile</th>
+              <th scope="col">DOB</th>
+              <th scope="col" class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @contacts.each do |contact| %>
+              <tr>
+                <td>
+                  <strong><%= contact.name %></strong><br>
+                  <small class="text-muted"><%= mail_to contact.email %></small>
+                </td>
+                <td><%= contact.role&.name.presence || 'Unassigned' %></td>
+                <td>
+                  <span class="badge bg-light text-dark"><%= contact.gender.presence || 'Unknown' %></span>
+                </td>
+                <td><i class="bi bi-telephone me-1"></i><%= contact.mobile %></td>
+                <td><%= contact.dob.presence || '—' %></td>
+                <td class="text-end">
+                  <div class="btn-group btn-group-sm" role="group">
+                    <%= link_to 'View', contact_path(contact), class: 'btn btn-secondary text-white' %>
+                    <%= link_to 'Edit', edit_contact_path(contact), class: 'btn btn-primary text-white' %>
+                    <%= link_to 'Delete', contact_path(contact), method: :delete, data: { confirm: 'Delete this contact?' }, class: 'btn btn-danger text-white' %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
   <% end %>
 </div>

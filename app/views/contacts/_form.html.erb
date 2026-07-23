@@ -1,17 +1,87 @@
-<%= form_with(model: contact) do |form| %>
-  <% if contact.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(contact.errors.count, "error") %> prohibited this contact from being saved:</h2>
-
-      <ul>
-        <% contact.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<div class="card shadow-sm border-0">
+  <div class="card-header bg-white border-bottom">
+    <div class="d-flex justify-content-between align-items-start flex-column flex-md-row">
+      <div>
+        <h5 class="mb-1"><%= contact.persisted? ? 'Contact details' : 'Create a new contact' %></h5>
+        <p class="text-muted mb-0">Fill in the details to keep your contacts organized and easy to reach.</p>
+      </div>
+      <% if contact.persisted? && contact.updated_at.present? %>
+        <span class="badge bg-light text-dark mt-3 mt-md-0">Last updated <%= contact.updated_at.strftime('%b %-d, %Y') %></span>
+      <% end %>
     </div>
-  <% end %>
-
-  <div>
-    <%= form.submit %>
   </div>
-<% end %>
+
+  <div class="card-body">
+    <%= form_with(model: contact, local: true, class: 'needs-validation') do |form| %>
+      <% if contact.errors.any? %>
+        <div class="alert alert-danger">
+          <h5 class="mb-2"><%= pluralize(contact.errors.count, 'error') %> prohibited this contact from being saved:</h5>
+          <ul class="mb-0">
+            <% contact.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="row gy-3">
+        <div class="col-md-6">
+          <%= form.label :name, class: 'form-label' %>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-person"></i></span>
+            <%= form.text_field :name, class: 'form-control', placeholder: 'Full name', autofocus: true %>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :email, class: 'form-label' %>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+            <%= form.email_field :email, class: 'form-control', placeholder: 'name@example.com' %>
+          </div>
+          <div class="form-text">A valid email helps with quick follow-ups.</div>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :mobile, class: 'form-label' %>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+            <%= form.telephone_field :mobile, class: 'form-control', placeholder: '+91 12345 67890' %>
+          </div>
+          <div class="form-text">Include country code for faster dialing.</div>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :dob, 'Date of birth', class: 'form-label' %>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-calendar-date"></i></span>
+            <%= form.date_field :dob, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :gender, class: 'form-label' %>
+          <%= form.select :gender, options_for_select([['Male', 'Male'], ['Female', 'Female'], ['Other', 'Other']], selected: contact.gender), { prompt: 'Select gender' }, class: 'form-select' %>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :role_id, 'Role', class: 'form-label' %>
+          <%= form.collection_select :role_id, Role.order(:name), :id, :name, { prompt: 'Select a role (optional)' }, class: 'form-select' %>
+        </div>
+
+        <div class="col-12">
+          <%= form.label :address, class: 'form-label' %>
+          <%= form.text_area :address, class: 'form-control', placeholder: 'Street address, city, state', rows: 4 %>
+          <div class="form-text">Use a full address for accurate location records.</div>
+        </div>
+      </div>
+
+      <div class="d-flex flex-column flex-sm-row justify-content-between align-items-stretch align-items-sm-center gap-2 mt-4">
+        <%= link_to contact.persisted? ? contact_path(contact) : contacts_path, class: 'btn btn-secondary text-white w-100 w-sm-auto' do %>
+          Cancel
+        <% end %>
+        <%= form.submit(contact.persisted? ? 'Save changes' : 'Create contact', class: 'btn btn-primary text-white w-100 w-sm-auto') %>
+      </div>
+    <% end %>
+  </div>
+</div>

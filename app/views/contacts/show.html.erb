@@ -1,10 +1,39 @@
-<p style="color: green"><%= notice %></p>
+<div class="container-fluid p-4">
+  <%= render 'shared/page_header', title: @contact.name.presence || 'Contact details', subtitle: 'Review or update this contact', action_button: [{ label: 'Back to Contacts', path: contacts_path, style: 'secondary' }] %>
 
-<%= render @contact %>
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start mb-4">
+            <div>
+              <h2 class="h4 mb-1"><%= @contact.name %></h2>
+              <p class="text-muted mb-0"><strong>Role:</strong> <%= @contact.role&.name.presence || 'Unassigned' %></p>
+            </div>
+            <div class="d-flex gap-2">
+              <%= link_to 'Edit', edit_contact_path(@contact), class: 'btn btn-primary text-white' %>
+              <%= button_to 'Delete', @contact, method: :delete, data: { confirm: "Delete #{@contact.name}?" }, class: 'btn btn-danger text-white' %>
+            </div>
+          </div>
 
-<div>
-  <%= link_to "Edit this contact", edit_contact_path(@contact) %> |
-  <%= link_to "Back to contacts", contacts_path %>
+          <dl class="row mb-0 text-sm">
+            <dt class="col-sm-4 text-muted">Email</dt>
+            <dd class="col-sm-8"><%= @contact.email %></dd>
 
-  <%= button_to "Destroy this contact", @contact, method: :delete %>
+            <dt class="col-sm-4 text-muted">Mobile</dt>
+            <dd class="col-sm-8"><%= @contact.mobile %></dd>
+
+            <dt class="col-sm-4 text-muted">Gender</dt>
+            <dd class="col-sm-8"><%= @contact.gender.presence || 'Not specified' %></dd>
+
+            <dt class="col-sm-4 text-muted">Date of birth</dt>
+            <dd class="col-sm-8"><%= @contact.dob.presence || 'Not specified' %></dd>
+
+            <dt class="col-sm-4 text-muted">Address</dt>
+            <dd class="col-sm-8"><%= @contact.address.presence || 'Not specified' %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

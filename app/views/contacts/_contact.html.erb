@@ -1,2 +1,6 @@
-<div id="<%= dom_id contact %>">
+<div id="<%= dom_id contact %>" class="contact-summary">
+  <h5 class="fw-bold"><%= contact.name.presence || 'Contact' %></h5>
+  <p class="mb-1"><strong>Email:</strong> <%= contact.email.presence || 'N/A' %></p>
+  <p class="mb-1"><strong>Mobile:</strong> <%= contact.mobile.presence || 'N/A' %></p>
+  <p class="text-muted mb-0"><strong>Role:</strong> <%= contact.role&.name.presence || 'Unassigned' %></p>
 </div>

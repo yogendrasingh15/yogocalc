@@ -27,8 +27,12 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
-  # Store uploaded files on the local file system (see config/storage.yml for options)
-  config.active_storage.service = :local
+  # Store uploaded files locally by default, or use S3 when AWS credentials are configured.
+  config.active_storage.service = if ENV['AWS_BUCKET'].present? && ENV['AWS_ACCESS_KEY_ID'].present? && ENV['AWS_SECRET_ACCESS_KEY'].present?
+    :amazon
+  else
+    :local
+  end
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
@@ -54,6 +58,14 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  config.hosts = [
+    "legendary-succotash-v6xvjwvjpwrhp47r-3000.app.github.dev",
+    "localhost",
+    "127.0.0.1"
+  ]
+  # Allow local forwarded requests in development when the browser origin differs
+  # from the forwarded request base URL (common in GitHub Codespaces / port tunneling).
+  config.action_controller.forgery_protection_origin_check = false
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.

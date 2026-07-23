@@ -7,6 +7,17 @@
 
 .d-flex {
   display: flex;
+  height: fit-content;
+}
+
+.login-section {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-left: auto;
+  margin-right: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 // Sidebar styling

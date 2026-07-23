@@ -10,7 +10,7 @@
     <% if local_assigns[:action_button] %>
       <div class="btn-group" role="group">
         <% local_assigns[:action_button].each do |btn| %>
-          <%= link_to btn[:label], btn[:path], class: "btn btn-#{btn[:style] || 'primary'} btn-sm" %>
+          <%= link_to btn[:label], btn[:path], class: "btn btn-#{btn[:style] || 'primary'} btn-sm text-white" %>
         <% end %>
       </div>
     <% end %>
