@@ -1,0 +1,9 @@
+<div id="<%= dom_id ticket %>">
+  <p><strong>Title:</strong> <%= ticket.title %></p>
+  <p><strong>Description:</strong> <%= simple_format(ticket.description) %></p>
+  <p><strong>Status:</strong> <%= ticket.status.to_s.humanize %></p>
+  <p><strong>Project:</strong> <%= Ticket::PROJECT_OPTIONS.find { |_, value| value == ticket.project_id }&.first || ticket.project_id %></p>
+  <p><strong>Location:</strong> <%= ticket.location.presence || "Not set" %></p>
+  <p><strong>Due date:</strong> <%= ticket.due_date.present? ? ticket.due_date.strftime("%d %b %Y") : "Not set" %></p>
+  <p><strong>Priority:</strong> <%= Ticket::PRIORITY_OPTIONS.find { |_, value| value == ticket.priority }&.first || ticket.priority %></p>
+</div>

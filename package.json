@@ -1,5 +1,13 @@
 {
   "name": "yuglata",
   "private": true,
-  "dependencies": {}
+  "scripts": {
+    "build:css": "sass ./app/assets/stylesheets/application.scss ./app/assets/builds/application.css --load-path=node_modules"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.1",
+    "sass": "1.77.0"
+  }
 }

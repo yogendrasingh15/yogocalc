@@ -12,13 +12,7 @@
 //
 //= require jquery
 //= require rails-ujs
-//= require bootstrap.min
+//= require bootstrap/dist/js/bootstrap.bundle
 //= require activestorage
 //= require turbolinks
 //= require_tree .
-
-import '@hotwired/turbo-rails'
-import 'controllers'
-import * as bootstrap from 'bootstrap'
-import Rails from '@rails/ujs'
-Rails.start()

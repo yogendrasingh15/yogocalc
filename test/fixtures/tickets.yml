@@ -1,0 +1,21 @@
+one:
+  title: Sample ticket
+  description: A sample ticket for testing
+  project_id: 1
+  user: one
+  status: open
+  priority: 1
+  location: Delhi
+  due_date: 2026-08-10 10:00:00
+  ticket_number: TKT-1001
+
+two:
+  title: Another ticket
+  description: A second sample ticket
+  project_id: 2
+  user: two
+  status: in_progress
+  priority: 2
+  location: Mumbai
+  due_date: 2026-08-12 10:00:00
+  ticket_number: TKT-1002
