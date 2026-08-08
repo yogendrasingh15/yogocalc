@@ -1,2 +1,9 @@
 <div id="<%= dom_id role %>">
+  <div class="d-flex justify-content-between align-items-start">
+    <div>
+      <h5 class="fw-bold mb-1"><%= role.name %></h5>
+      <p class="text-muted mb-0">Created <%= l(role.created_at, format: :short) %></p>
+    </div>
+    <span class="badge bg-primary-subtle text-primary">Role</span>
+  </div>
 </div>

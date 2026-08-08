@@ -1,17 +1,29 @@
-<%= form_with(model: role) do |form| %>
+<%= form_with(model: role, local: true, class: 'row g-3') do |form| %>
   <% if role.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(role.errors.count, "error") %> prohibited this role from being saved:</h2>
-
-      <ul>
-        <% role.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <div class="col-12">
+      <div class="alert alert-danger" role="alert">
+        <h6 class="alert-heading"><%= pluralize(role.errors.count, "error") %> prohibited this role from being saved:</h6>
+        <ul class="mb-0">
+          <% role.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
-  <div>
-    <%= form.submit %>
+  <div class="col-12">
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-control', placeholder: 'Enter role name' %>
+  </div>
+
+  <div class="col-12">
+    <%= form.label :user_id, 'Associate User', class: 'form-label' %>
+    <%= form.collection_select :user_id, User.order(:name), :id, :name, { include_blank: 'Select a user (optional)' }, class: 'form-select' %>
+  </div>
+
+  <div class="col-12 d-flex gap-2">
+    <%= form.submit class: 'btn btn-primary' %>
+    <%= link_to 'Cancel', roles_path, class: 'btn btn-outline-secondary' %>
   </div>
 <% end %>
