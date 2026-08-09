@@ -1,10 +1,14 @@
-<h1>Editing ticket</h1>
+<div class="container py-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <div>
+      <h1 class="h3 mb-1">Edit ticket</h1>
+      <p class="text-muted mb-0">Update the details and keep the ticket current.</p>
+    </div>
+    <div class="d-flex gap-2">
+      <%= link_to "Show this ticket", @ticket, class: "btn btn-outline-primary btn-sm" %>
+      <%= link_to "Back to tickets", tickets_path, class: "btn btn-outline-secondary btn-sm" %>
+    </div>
+  </div>
 
-<%= render "form", ticket: @ticket %>
-
-<br>
-
-<div>
-  <%= link_to "Show this ticket", @ticket %> |
-  <%= link_to "Back to tickets", tickets_path %>
+  <%= render "form", ticket: @ticket %>
 </div>

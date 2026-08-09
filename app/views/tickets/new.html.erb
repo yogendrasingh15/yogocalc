@@ -1,9 +1,11 @@
-<h1>New ticket</h1>
+<div class="container py-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <div>
+      <h1 class="h3 mb-1">New ticket</h1>
+      <p class="text-muted mb-0">Add a new ticket and keep your workflow organized.</p>
+    </div>
+    <%= link_to "Back to tickets", tickets_path, class: "btn btn-outline-secondary btn-sm" %>
+  </div>
 
-<%= render "form", ticket: @ticket %>
-
-<br>
-
-<div>
-  <%= link_to "Back to tickets", tickets_path %>
+  <%= render "form", ticket: @ticket %>
 </div>

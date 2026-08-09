@@ -1,52 +1,72 @@
-<%= form_with(model: ticket, local: true) do |form| %>
+<%= form_with(model: ticket, local: true, class: "row g-3") do |form| %>
   <% if ticket.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
-
-      <ul>
-        <% ticket.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <div class="alert alert-danger" role="alert">
+      <div class="d-flex align-items-start gap-2">
+        <i class="bi bi-exclamation-triangle-fill mt-1"></i>
+        <div>
+          <h5 class="alert-heading mb-2"><%= pluralize(ticket.errors.count, "error") %> prevented this ticket from being saved.</h5>
+          <ul class="mb-0 ps-3">
+            <% ticket.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title %><br>
-    <%= form.text_field :title, required: true %>
-  </div>
+  <div class="col-12">
+    <div class="card shadow-sm border-0">
+      <div class="card-body p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+          <div>
+            <h4 class="fw-semibold mb-1"><i class="bi bi-ticket-perforated me-2 text-primary"></i>Ticket details</h4>
+            <p class="text-muted mb-0">Create or update a ticket with clear status, location, and priority information.</p>
+          </div>
+        </div>
 
-  <div>
-    <%= form.label :description %><br>
-    <%= form.text_area :description, rows: 4 %>
-  </div>
+        <div class="row g-3">
+          <div class="col-12">
+            <%= form.label :title, class: "form-label fw-semibold" %>
+            <%= form.text_field :title, required: true, class: "form-control", placeholder: "Enter a concise title" %>
+          </div>
 
-  <div>
-    <%= form.label :project_id, "Project" %><br>
-    <%= form.select :project_id, options_for_select(Ticket::PROJECT_OPTIONS, ticket.project_id), { include_blank: "Select a project" } %>
-  </div>
+          <div class="col-12">
+            <%= form.label :description, class: "form-label fw-semibold" %>
+            <%= form.text_area :description, rows: 4, class: "form-control", placeholder: "Add the issue details, context, or request..." %>
+          </div>
 
-  <div>
-    <%= form.label :status %><br>
-    <%= form.select :status, options_for_select(Ticket::STATUS_OPTIONS.map { |value| [value.humanize, value] }, ticket.status), { include_blank: false } %>
-  </div>
+          <div class="col-md-6">
+            <%= form.label :project_id, "Project", class: "form-label fw-semibold" %>
+            <%= form.select :project_id, options_for_select(Ticket::PROJECT_OPTIONS, ticket.project_id), { include_blank: "Select a project" }, { class: "form-select" } %>
+          </div>
 
-  <div>
-    <%= form.label :location %><br>
-    <%= form.text_field :location %>
-  </div>
+          <div class="col-md-6">
+            <%= form.label :status, class: "form-label fw-semibold" %>
+            <%= form.select :status, options_for_select(Ticket::STATUS_OPTIONS.map { |value| [value.humanize, value] }, ticket.status), { include_blank: false }, { class: "form-select" } %>
+          </div>
 
-  <div>
-    <%= form.label :due_date %><br>
-    <%= form.date_field :due_date %>
-  </div>
+          <div class="col-md-6">
+            <%= form.label :location, class: "form-label fw-semibold" %>
+            <%= form.text_field :location, class: "form-control", placeholder: "e.g. Jaipur, Studio 2" %>
+          </div>
 
-  <div>
-    <%= form.label :priority %><br>
-    <%= form.select :priority, options_for_select(Ticket::PRIORITY_OPTIONS, ticket.priority), { include_blank: false } %>
-  </div>
+          <div class="col-md-6">
+            <%= form.label :due_date, class: "form-label fw-semibold" %>
+            <%= form.date_field :due_date, class: "form-control" %>
+          </div>
 
-  <div style="margin-top: 12px">
-    <%= form.submit %>
+          <div class="col-md-6">
+            <%= form.label :priority, class: "form-label fw-semibold" %>
+            <%= form.select :priority, options_for_select(Ticket::PRIORITY_OPTIONS, ticket.priority), { include_blank: false }, { class: "form-select" } %>
+          </div>
+
+          <div class="col-12 d-flex flex-wrap gap-2 pt-2">
+            <%= form.submit "Save ticket", class: "btn btn-primary px-4" %>
+            <%= link_to "Cancel", tickets_path, class: "btn btn-outline-secondary" %>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 <% end %>
