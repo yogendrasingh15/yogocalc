@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :customers
+  resources :accounts do
+    resources :account_transactions, only: %i[new create]
+  end
   resources :tickets
   resources :assets
   resources :nominees

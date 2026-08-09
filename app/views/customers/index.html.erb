@@ -1,0 +1,65 @@
+<div class="container py-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+    <div>
+      <h1 class="h3 mb-1">Customers</h1>
+      <p class="text-muted mb-0">Manage customer profiles and onboarding details.</p>
+    </div>
+    <%= link_to "New customer", new_customer_path, class: "btn btn-primary" %>
+  </div>
+
+  <div class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
+      <%= form_with url: customers_path, method: :get, local: true, class: "row g-2 align-items-end" do %>
+        <div class="col-md-5">
+          <label class="form-label small fw-semibold">Search</label>
+          <%= text_field_tag :q, params[:q], class: "form-control", placeholder: "Name or customer number" %>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label small fw-semibold">Status</label>
+          <%= select_tag :status, options_for_select([['All statuses', ''], ['Active', 'active'], ['Inactive', 'inactive'], ['Blocked', 'blocked'], ['Closed', 'closed']], params[:status]), class: "form-select" %>
+        </div>
+        <div class="col-md-3 d-flex gap-2">
+          <%= submit_tag "Filter", class: "btn btn-primary" %>
+          <%= link_to "Reset", customers_path, class: "btn btn-outline-secondary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <% if @customers.any? %>
+    <div class="card shadow-sm border-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Customer #</th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Customer since</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @customers.each do |customer| %>
+              <tr>
+                <td class="fw-semibold"><%= customer.customer_number %></td>
+                <td><%= customer.full_name %></td>
+                <td><%= customer.customer_type.humanize %></td>
+                <td><span class="badge bg-success-subtle text-success-emphasis"><%= customer.status.humanize %></span></td>
+                <td><%= customer.customer_since.present? ? customer.customer_since.strftime("%d %b %Y") : "—" %></td>
+                <td class="text-end">
+                  <%= link_to "View", customer_path(customer), class: "btn btn-sm btn-outline-primary" %>
+                  <%= link_to "Edit", edit_customer_path(customer), class: "btn btn-sm btn-outline-secondary" %>
+                  <%= button_to "Delete", customer_path(customer), method: :delete, class: "btn btn-sm btn-outline-danger", form: { data: { turbo_confirm: "Are you sure?" } } %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% else %>
+    <div class="alert alert-info">No customers yet.</div>
+  <% end %>
+</div>

@@ -1,0 +1,18 @@
+<div class="container py-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+    <div>
+      <h1 class="h3 mb-1">Edit customer</h1>
+      <p class="text-muted mb-0">Update customer details and profile status.</p>
+    </div>
+    <div class="d-flex gap-2">
+      <%= link_to "Show customer", customer_path(@customer), class: "btn btn-outline-primary" %>
+      <%= link_to "Back to customers", customers_path, class: "btn btn-outline-secondary" %>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0">
+    <div class="card-body p-4">
+      <%= render "form", customer: @customer %>
+    </div>
+  </div>
+</div>

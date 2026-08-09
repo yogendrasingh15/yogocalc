@@ -30,6 +30,16 @@
       </div>
     </div>
 
+    <%= link_to customers_path, class: "list-group-item list-group-item-action #{current_page?(customers_path) ? 'active' : ''}" do %>
+      <i class="bi bi-people"></i>
+      <span>Customers</span>
+    <% end %>
+
+    <%= link_to accounts_path, class: "list-group-item list-group-item-action #{current_page?(accounts_path) ? 'active' : ''}" do %>
+      <i class="bi bi-bank"></i>
+      <span>Accounts</span>
+    <% end %>
+
     <%= link_to tickets_path, class: "list-group-item list-group-item-action #{current_page?(tickets_path) ? 'active' : ''}" do %>
       <i class="bi bi-ticket"></i>
       <span>Tickets</span>
@@ -73,5 +83,12 @@
 <style>
   .sidebar .list-group .list-group-item{
   display: grid !important
+}
+
+.sidebar .list-group .list-group-item{
+ padding: 0px !important;
+}
+.mt-2 {
+    margin-top: -1.0rem !important;
 }
 </style>

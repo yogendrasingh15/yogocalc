@@ -1,0 +1,55 @@
+<div class="container py-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+    <div>
+      <h1 class="h3 mb-1">Record transaction</h1>
+      <p class="text-muted mb-0">Add a deposit, withdrawal, or other activity to this account ledger.</p>
+    </div>
+    <%= link_to "Back to account", account_path(@account), class: "btn btn-outline-secondary" %>
+  </div>
+
+  <div class="card shadow-sm border-0">
+    <div class="card-body p-4">
+      <%= form_with(model: [@account, @account_transaction], local: true, class: "row g-3") do |form| %>
+        <% if @account_transaction.errors.any? %>
+          <div class="alert alert-danger">
+            <ul class="mb-0">
+              <% @account_transaction.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="col-md-6">
+          <%= form.label :transaction_type, class: "form-label fw-semibold" %>
+          <%= form.select :transaction_type, options_for_select([['Deposit', 'deposit'], ['Withdrawal', 'withdrawal'], ['Transfer', 'transfer'], ['Fee', 'fee'], ['Interest', 'interest']], @account_transaction.transaction_type), { include_blank: 'Select type' }, { class: 'form-select', required: true } %>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :amount, class: "form-label fw-semibold" %>
+          <%= form.number_field :amount, step: :any, class: 'form-control', required: true %>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :description, class: "form-label fw-semibold" %>
+          <%= form.text_field :description, class: 'form-control', required: true %>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :reference_number, class: "form-label fw-semibold" %>
+          <%= form.text_field :reference_number, class: 'form-control' %>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :transaction_date, class: "form-label fw-semibold" %>
+          <%= form.datetime_local_field :transaction_date, class: 'form-control' %>
+        </div>
+
+        <div class="col-12 d-flex gap-2 pt-2">
+          <%= form.submit "Record transaction", class: "btn btn-primary" %>
+          <%= link_to "Cancel", account_path(@account), class: "btn btn-outline-secondary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

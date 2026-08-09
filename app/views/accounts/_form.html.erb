@@ -1,0 +1,94 @@
+<%= form_with(model: account, local: true, class: "row g-3") do |form| %>
+  <% if account.errors.any? %>
+    <div class="alert alert-danger">
+      <h5 class="alert-heading">Please fix the following issues:</h5>
+      <ul class="mb-0">
+        <% account.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="col-md-6">
+    <%= form.label :customer_id, "Customer", class: "form-label fw-semibold" %>
+    <%= form.collection_select :customer_id, @customers || Customer.order(:first_name, :last_name, :business_name), :id, :full_name, { include_blank: "Select customer" }, { class: "form-select", required: true } %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :account_number, class: "form-label fw-semibold" %>
+    <%= form.text_field :account_number, class: "form-control", required: true %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :account_type, class: "form-label fw-semibold" %>
+    <%= form.text_field :account_type, class: "form-control", required: true, placeholder: "savings, checking, credit" %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :account_status, class: "form-label fw-semibold" %>
+    <%= form.text_field :account_status, class: "form-control", value: account.account_status.presence || "ACTIVE" %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :currency_code, class: "form-label fw-semibold" %>
+    <%= form.text_field :currency_code, class: "form-control", maxlength: 3 %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :balance, class: "form-label fw-semibold" %>
+    <%= form.number_field :balance, step: :any, class: "form-control" %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :available_balance, class: "form-label fw-semibold" %>
+    <%= form.number_field :available_balance, step: :any, class: "form-control" %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :interest_rate, class: "form-label fw-semibold" %>
+    <%= form.number_field :interest_rate, step: :any, class: "form-control" %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :overdraft_limit, class: "form-label fw-semibold" %>
+    <%= form.number_field :overdraft_limit, step: :any, class: "form-control" %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :branch_id, class: "form-label fw-semibold" %>
+    <%= form.number_field :branch_id, class: "form-control" %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :opened_at, class: "form-label fw-semibold" %>
+    <%= form.datetime_local_field :opened_at, class: "form-control" %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :closed_at, class: "form-label fw-semibold" %>
+    <%= form.datetime_local_field :closed_at, class: "form-control" %>
+  </div>
+
+  <div class="col-md-4 d-flex align-items-end">
+    <div class="form-check form-switch">
+      <%= form.check_box :is_joint_account, class: "form-check-input" %>
+      <%= form.label :is_joint_account, "Joint account", class: "form-check-label" %>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :created_by, class: "form-label fw-semibold" %>
+    <%= form.text_field :created_by, class: "form-control" %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :updated_by, class: "form-label fw-semibold" %>
+    <%= form.text_field :updated_by, class: "form-control" %>
+  </div>
+
+  <div class="col-12 d-flex gap-2 pt-2">
+    <%= form.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", accounts_path, class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>

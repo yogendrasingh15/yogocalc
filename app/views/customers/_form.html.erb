@@ -1,0 +1,77 @@
+<%= form_with(model: customer, local: true, class: "row g-3") do |form| %>
+  <% if customer.errors.any? %>
+    <div class="alert alert-danger">
+      <h5 class="alert-heading">Please fix the following issues:</h5>
+      <ul class="mb-0">
+        <% customer.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="col-md-6">
+    <%= form.label :customer_number, class: "form-label fw-semibold" %>
+    <%= form.text_field :customer_number, class: "form-control", required: true %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :customer_type, class: "form-label fw-semibold" %>
+    <%= form.select :customer_type, options_for_select(Customer::CUSTOMER_TYPES.map { |value| [value.humanize, value] }, customer.customer_type), { include_blank: "Select type" }, { class: "form-select", required: true } %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :first_name, class: "form-label fw-semibold" %>
+    <%= form.text_field :first_name, class: "form-control" %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :middle_name, class: "form-label fw-semibold" %>
+    <%= form.text_field :middle_name, class: "form-control" %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :last_name, class: "form-label fw-semibold" %>
+    <%= form.text_field :last_name, class: "form-control" %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :business_name, class: "form-label fw-semibold" %>
+    <%= form.text_field :business_name, class: "form-control" %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :date_of_birth, class: "form-label fw-semibold" %>
+    <%= form.date_field :date_of_birth, class: "form-control" %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :gender, class: "form-label fw-semibold" %>
+    <%= form.select :gender, options_for_select([['Male', 'male'], ['Female', 'female']], customer.gender), { include_blank: 'Select gender' }, { class: 'form-select' } %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :nationality, class: "form-label fw-semibold" %>
+    <%= form.text_field :nationality, class: "form-control" %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :status, class: "form-label fw-semibold" %>
+    <%= form.select :status, options_for_select(Customer::STATUSES.map { |value| [value.humanize, value] }, customer.status), { include_blank: false }, { class: "form-select" } %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :customer_since, class: "form-label fw-semibold" %>
+    <%= form.date_field :customer_since, class: "form-control", required: true %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :branch_id, class: "form-label fw-semibold" %>
+    <%= form.number_field :branch_id, class: "form-control" %>
+  </div>
+
+  <div class="col-12 d-flex gap-2 pt-2">
+    <%= form.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", customers_path, class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>

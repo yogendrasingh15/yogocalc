@@ -1,0 +1,83 @@
+<div class="container py-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+    <div>
+      <h1 class="h3 mb-1">Account details</h1>
+      <p class="text-muted mb-0">Review the account profile and balances.</p>
+    </div>
+    <div class="d-flex gap-2">
+      <%= link_to "Edit account", edit_account_path(@account), class: "btn btn-outline-primary" %>
+      <%= link_to "Back to accounts", accounts_path, class: "btn btn-outline-secondary" %>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0">
+    <div class="card-body p-4">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <h5 class="fw-semibold mb-3">Account information</h5>
+          <dl class="row mb-0">
+            <dt class="col-sm-5">Account #</dt>
+            <dd class="col-sm-7"><%= @account.account_number %></dd>
+            <dt class="col-sm-5">Customer</dt>
+            <dd class="col-sm-7"><%= @account.customer&.full_name || "—" %></dd>
+            <dt class="col-sm-5">Type</dt>
+            <dd class="col-sm-7"><%= @account.account_type.humanize %></dd>
+            <dt class="col-sm-5">Status</dt>
+            <dd class="col-sm-7"><span class="badge bg-info-subtle text-info-emphasis"><%= @account.account_status %></span></dd>
+          </dl>
+        </div>
+        <div class="col-md-6">
+          <h5 class="fw-semibold mb-3">Financials</h5>
+          <dl class="row mb-0">
+            <dt class="col-sm-5">Currency</dt>
+            <dd class="col-sm-7"><%= @account.currency_code %></dd>
+            <dt class="col-sm-5">Balance</dt>
+            <dd class="col-sm-7"><%= number_to_currency(@account.balance, unit: @account.currency_code, format: "%u %n") %></dd>
+            <dt class="col-sm-5">Available</dt>
+            <dd class="col-sm-7"><%= number_to_currency(@account.available_balance, unit: @account.currency_code, format: "%u %n") %></dd>
+            <dt class="col-sm-5">Overdraft limit</dt>
+            <dd class="col-sm-7"><%= number_to_currency(@account.overdraft_limit, unit: @account.currency_code, format: "%u %n") %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0 mt-4">
+    <div class="card-body p-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-semibold mb-0">Ledger</h5>
+        <%= link_to "Record transaction", new_account_account_transaction_path(@account), class: "btn btn-sm btn-primary" %>
+      </div>
+
+      <% if @account.account_transactions.any? %>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Reference</th>
+                <th class="text-end">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @account.account_transactions.order(transaction_date: :desc).each do |transaction| %>
+                <tr>
+                  <td><%= transaction.transaction_date.present? ? transaction.transaction_date.strftime("%d %b %Y %H:%M") : "—" %></td>
+                  <td><span class="badge bg-info-subtle text-info-emphasis"><%= transaction.transaction_type.humanize %></span></td>
+                  <td><%= transaction.description %></td>
+                  <td><%= transaction.reference_number.presence || "—" %></td>
+                  <td class="text-end fw-semibold"><%= number_to_currency(transaction.amount, unit: @account.currency_code, format: "%u %n") %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <div class="alert alert-info mb-0">No transactions recorded yet.</div>
+      <% end %>
+    </div>
+  </div>
+</div>
