@@ -16,6 +16,7 @@ class AssetsTest < ApplicationSystemTestCase
 
     fill_in "Description", with: @asset.description
     fill_in "Title", with: @asset.title
+    select "Image", from: "Type"
     click_on "Create Asset"
 
     assert_text "Asset was successfully created"
@@ -28,6 +29,7 @@ class AssetsTest < ApplicationSystemTestCase
 
     fill_in "Description", with: @asset.description
     fill_in "Title", with: @asset.title
+    select "Image", from: "Type"
     click_on "Update Asset"
 
     assert_text "Asset was successfully updated"

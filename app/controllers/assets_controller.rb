@@ -9,10 +9,20 @@ class AssetsController < InheritedResources::Base
     end
   end
 
+  def update
+    @asset = resource
+
+    if @asset.update(asset_params)
+      redirect_to @asset, notice: 'Asset was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
 
     def asset_params
-      params.require(:asset).permit(:title, :description, :file)
+      params.require(:asset).permit(:title, :description, :asset_type, :file)
     end
 
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_08_09_091000) do
+ActiveRecord::Schema[7.0].define(version: 2026_08_16_000002) do
   create_table "account_transactions", force: :cascade do |t|
     t.integer "account_id", null: false
     t.string "transaction_type", null: false
@@ -79,6 +79,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_08_09_091000) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "asset_type"
   end
 
   create_table "bets", force: :cascade do |t|
@@ -138,6 +139,23 @@ ActiveRecord::Schema[7.0].define(version: 2026_08_09_091000) do
     t.string "city"
     t.string "state"
     t.string "pincode"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "offers", force: :cascade do |t|
+    t.string "title"
+    t.string "offer_type"
+    t.string "destination"
+    t.text "description"
+    t.decimal "price"
+    t.decimal "original_price"
+    t.decimal "discount_percentage"
+    t.date "start_date"
+    t.date "end_date"
+    t.string "status"
+    t.boolean "is_featured"
+    t.string "image_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

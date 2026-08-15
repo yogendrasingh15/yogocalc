@@ -1,0 +1,85 @@
+<%= form_with(model: offer, local: true, class: "row g-3") do |form| %>
+  <% if offer.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <h5 class="alert-heading">Please fix the following:</h5>
+      <ul class="mb-0">
+        <% offer.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="col-md-6">
+    <%= form.label :title, class: "form-label fw-semibold" %>
+    <%= form.text_field :title, class: "form-control", placeholder: "Summer Escape Package", required: true %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :offer_type, class: "form-label fw-semibold" %>
+    <%= form.select :offer_type,
+      options_for_select(Offer::OFFER_TYPES.map { |value| [value.humanize, value] }, offer.offer_type),
+      { include_blank: "Select offer type" },
+      { class: "form-select", required: true } %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :destination, class: "form-label fw-semibold" %>
+    <%= form.text_field :destination, class: "form-control", placeholder: "Bali, Goa, Dubai", required: true %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :status, class: "form-label fw-semibold" %>
+    <%= form.select :status,
+      options_for_select(Offer::STATUSES.map { |value| [value.humanize, value] }, offer.status),
+      { include_blank: "Select status" },
+      { class: "form-select", required: true } %>
+  </div>
+
+  <div class="col-12">
+    <%= form.label :description, class: "form-label fw-semibold" %>
+    <%= form.text_area :description, class: "form-control", rows: 4, placeholder: "Describe the travel offer and inclusions" %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :price, class: "form-label fw-semibold" %>
+    <%= form.number_field :price, step: :any, class: "form-control", required: true %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :original_price, class: "form-label fw-semibold" %>
+    <%= form.number_field :original_price, step: :any, class: "form-control", required: true %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :discount_percentage, class: "form-label fw-semibold" %>
+    <%= form.number_field :discount_percentage, step: :any, class: "form-control", required: true %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :start_date, class: "form-label fw-semibold" %>
+    <%= form.date_field :start_date, class: "form-control", required: true %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :end_date, class: "form-label fw-semibold" %>
+    <%= form.date_field :end_date, class: "form-control", required: true %>
+  </div>
+
+  <div class="col-12">
+    <%= form.label :image_url, "Image URL", class: "form-label fw-semibold" %>
+    <%= form.url_field :image_url, class: "form-control", placeholder: "https://example.com/travel-offer.jpg" %>
+  </div>
+
+  <div class="col-12">
+    <div class="form-check form-switch">
+      <%= form.check_box :is_featured, class: "form-check-input" %>
+      <%= form.label :is_featured, "Featured offer", class: "form-check-label" %>
+    </div>
+  </div>
+
+  <div class="col-12 d-flex gap-2 pt-2">
+    <%= form.submit offer.persisted? ? "Update offer" : "Create offer", class: "btn btn-primary px-4" %>
+    <%= link_to "Cancel", offers_path, class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>

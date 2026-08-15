@@ -1,0 +1,52 @@
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-xl-8">
+      <div class="card border-0 shadow-sm overflow-hidden">
+        <div class="position-relative">
+          <% if @offer.image_url.present? && (@offer.image_url.start_with?("http://", "https://", "/")) %>
+            <%= image_tag @offer.image_url, class: "img-fluid w-100", style: "height: 280px; object-fit: cover;" %>
+          <% else %>
+            <div class="bg-gradient-primary text-white d-flex align-items-center justify-content-center" style="height: 280px; font-size: 2rem; font-weight: 600;">
+              <%= @offer.destination.presence || @offer.title %>
+            </div>
+          <% end %>
+          <% if @offer.is_featured %>
+            <span class="position-absolute top-0 start-0 m-3 badge bg-warning text-dark">Featured</span>
+          <% end %>
+        </div>
+
+        <div class="card-body p-4">
+          <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+            <div>
+              <p class="text-primary small fw-semibold text-uppercase mb-1"><%= @offer.offer_type.humanize %></p>
+              <h1 class="h3 mb-1"><%= @offer.title %></h1>
+              <p class="text-muted mb-0"><i class="bi bi-geo-alt me-1"></i><%= @offer.destination %></p>
+            </div>
+            <div class="text-end">
+              <div class="fs-3 fw-bold text-primary"><%= number_to_currency(@offer.price, unit: "₹") %></div>
+              <div class="text-decoration-line-through text-muted small"><%= number_to_currency(@offer.original_price, unit: "₹") %></div>
+            </div>
+          </div>
+
+          <div class="row g-3 mb-4">
+            <div class="col-md-3"><div class="border rounded p-3"><small class="text-muted d-block">Status</small><strong><%= @offer.status.humanize %></strong></div></div>
+            <div class="col-md-3"><div class="border rounded p-3"><small class="text-muted d-block">Discount</small><strong><%= @offer.discount_percentage %>%</strong></div></div>
+            <div class="col-md-3"><div class="border rounded p-3"><small class="text-muted d-block">Start date</small><strong><%= @offer.start_date %></strong></div></div>
+            <div class="col-md-3"><div class="border rounded p-3"><small class="text-muted d-block">End date</small><strong><%= @offer.end_date %></strong></div></div>
+          </div>
+
+          <div class="mb-4">
+            <h5 class="fw-semibold">Description</h5>
+            <p class="text-muted mb-0"><%= @offer.description %></p>
+          </div>
+
+          <div class="d-flex flex-wrap gap-2">
+            <%= link_to "Edit this offer", edit_offer_path(@offer), class: "btn btn-primary" %>
+            <%= link_to "Back to offers", offers_path, class: "btn btn-outline-secondary" %>
+            <%= button_to "Delete", @offer, method: :delete, class: "btn btn-outline-danger", form: { data: { turbo_confirm: "Are you sure?" } } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

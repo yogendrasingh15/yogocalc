@@ -1,32 +1,43 @@
-<%= form_with(model: asset) do |form| %>
+<%= form_with(model: asset, local: true, class: "row g-3") do |form| %>
   <% if asset.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(asset.errors.count, "error") %> prohibited this asset from being saved:</h2>
-
-      <ul>
-        <% asset.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+    <div class="alert alert-danger" role="alert">
+      <h5 class="alert-heading">Please correct the following:</h5>
+      <ul class="mb-0">
+        <% asset.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+  <div class="col-md-6">
+    <%= form.label :title, class: "form-label fw-semibold" %>
+    <%= form.text_field :title, class: "form-control", placeholder: "Enter asset title", required: true %>
   </div>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
+  <div class="col-md-6">
+    <%= form.label :asset_type, "Type", class: "form-label fw-semibold" %>
+    <%= form.select :asset_type,
+      options_for_select(Asset::ASSET_TYPES.map { |value| [value.humanize, value] }, asset.asset_type),
+      { include_blank: "Select asset type" },
+      { class: "form-select", required: true } %>
   </div>
 
-  <div>
-    <%= form.label :file, style: "display: block" %>
-    <%= form.file_field :file %>
+  <div class="col-12">
+    <%= form.label :description, class: "form-label fw-semibold" %>
+    <%= form.text_area :description, class: "form-control", rows: 4, placeholder: "Add a short description..." %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="col-12">
+    <%= form.label :file, "Upload file", class: "form-label fw-semibold" %>
+    <%= form.file_field :file, class: "form-control" %>
+    <% if asset.file.attached? %>
+      <div class="form-text">Current file: <%= link_to asset.file.filename.to_s, asset.file_url, target: "_blank", rel: "noopener" %></div>
+    <% end %>
+  </div>
+
+  <div class="col-12 d-flex gap-2 pt-2">
+    <%= form.submit class: "btn btn-primary px-4" %>
+    <%= link_to "Cancel", assets_path, class: "btn btn-outline-secondary" %>
   </div>
 <% end %>

@@ -20,7 +20,7 @@ class AssetsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create asset" do
     assert_difference("Asset.count") do
-      post assets_url, params: { asset: { description: @asset.description, title: @asset.title } }
+      post assets_url, params: { asset: { description: @asset.description, title: @asset.title, asset_type: "image" } }
     end
 
     assert_redirected_to asset_url(Asset.last)

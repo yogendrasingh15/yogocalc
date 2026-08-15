@@ -5,7 +5,7 @@ class AssetTest < ActiveSupport::TestCase
   self.fixture_path = nil
 
   test 'can attach a file and expose a public URL' do
-    asset = Asset.new(title: 'Sample asset')
+    asset = Asset.new(title: 'Sample asset', asset_type: 'image')
     asset.file.attach(
       io: StringIO.new('hello world'),
       filename: 'hello.txt',

@@ -3,7 +3,9 @@
 one:
   title: MyString
   description: MyText
+  asset_type: image
 
 two:
   title: MyString
   description: MyText
+  asset_type: document

@@ -1,5 +1,11 @@
 class Asset < ApplicationRecord
+  self.inheritance_column = :_type_disabled
+
   has_one_attached :file
+
+  ASSET_TYPES = %w[image document video audio other].freeze
+
+  validates :asset_type, presence: true, inclusion: { in: ASSET_TYPES }
 
   def file_url
     return unless file.attached?
