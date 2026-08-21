@@ -6,7 +6,7 @@ class Ticket < ApplicationRecord
 
   before_validation :generate_ticket_number, on: :create
 
-  STATUS_OPTIONS = %w[open in_progress resolved closed].freeze
+  STATUS_OPTIONS = %w[open in_progress resolved closed re_open].freeze
   PRIORITY_OPTIONS = [["Low", 0], ["Medium", 1], ["High", 2]].freeze
   PROJECT_OPTIONS = [["Project 1", 1], ["Project 2", 2], ["Project 3", 3]].freeze
 

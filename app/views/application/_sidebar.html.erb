@@ -26,10 +26,17 @@
               <span>Header</span>
             <% end %>
           </li>
-        <li>
+        <li class="list-group-item bg-transparent px-0">
           <%= link_to assets_path, class: "d-flex align-items-center text-decoration-none text-white px-2 py-1" do %>
           <i class="bi bi-layout-text-window-reverse me-2"></i>
           <span>Assets</span>
+          <% end %>
+        </li>
+
+        <li class="list-group-item bg-transparent px-0">
+          <%= link_to custom_pages_path, class: "d-flex align-items-center text-decoration-none text-white px-2 py-1" do %>
+          <i class="bi bi-layout-text-window-reverse me-2"></i>
+          <span>Custom Pages</span>
           <% end %>
         </li>
         </ul>

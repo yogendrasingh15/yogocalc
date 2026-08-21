@@ -1,0 +1,111 @@
+<%= form_with(model: custom_page, local: true, class: "row g-3") do |form| %>
+  <% if custom_page.errors.any? %>
+    <div class="alert alert-danger col-12" role="alert">
+      <h5 class="alert-heading">Please correct the following:</h5>
+      <ul class="mb-0">
+        <% custom_page.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="col-md-8">
+    <%= form.label :title, class: "form-label fw-semibold" %>
+    <%= form.text_field :title, class: "form-control", placeholder: "Welcome to our company", required: true %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :slug, class: "form-label fw-semibold" %>
+    <%= form.text_field :slug, class: "form-control", placeholder: "welcome-to-our-company" %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :page_type, class: "form-label fw-semibold" %>
+    <%= form.select :page_type, options_for_select(CustomPage::PAGE_TYPES.map { |value| [value.humanize, value] }, custom_page.page_type), { include_blank: "Select page type" }, { class: "form-select", required: true } %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :status, class: "form-label fw-semibold" %>
+    <%= form.select :status, options_for_select(CustomPage::STATUSES.map { |value| [value.humanize, value] }, custom_page.status), { include_blank: "Select status" }, { class: "form-select", required: true } %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :template, class: "form-label fw-semibold" %>
+    <%= form.text_field :template, class: "form-control", placeholder: "default" %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :sort_order, class: "form-label fw-semibold" %>
+    <%= form.number_field :sort_order, class: "form-control", min: 0 %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :featured_image, "Featured image URL", class: "form-label fw-semibold" %>
+    <%= form.text_field :featured_image, class: "form-control", placeholder: "https://example.com/image.jpg" %>
+  </div>
+
+  <div class="col-12">
+    <%= form.label :excerpt, class: "form-label fw-semibold" %>
+    <%= form.text_area :excerpt, class: "form-control", rows: 2, placeholder: "Short page description" %>
+  </div>
+
+  <div class="col-12">
+    <%= form.label :content, class: "form-label fw-semibold" %>
+    <%= form.text_area :content, class: "form-control", rows: 8, placeholder: "Page content here...", required: true %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :meta_title, class: "form-label fw-semibold" %>
+    <%= form.text_field :meta_title, class: "form-control" %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :canonical_url, class: "form-label fw-semibold" %>
+    <%= form.text_field :canonical_url, class: "form-control" %>
+  </div>
+
+  <div class="col-12">
+    <%= form.label :meta_description, class: "form-label fw-semibold" %>
+    <%= form.text_area :meta_description, class: "form-control", rows: 3 %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :meta_keywords, class: "form-label fw-semibold" %>
+    <%= form.text_area :meta_keywords, class: "form-control", rows: 2 %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :robots, class: "form-label fw-semibold" %>
+    <%= form.text_field :robots, class: "form-control", placeholder: "index,follow" %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :published_at, class: "form-label fw-semibold" %>
+    <%= form.datetime_local_field :published_at, class: "form-control" %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :scheduled_at, class: "form-label fw-semibold" %>
+    <%= form.datetime_local_field :scheduled_at, class: "form-control" %>
+  </div>
+
+  <div class="col-md-6">
+    <div class="form-check form-switch mt-4">
+      <%= form.check_box :is_active, class: "form-check-input" %>
+      <%= form.label :is_active, "Active", class: "form-check-label" %>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="form-check form-switch mt-4">
+      <%= form.check_box :is_homepage, class: "form-check-input" %>
+      <%= form.label :is_homepage, "Homepage", class: "form-check-label" %>
+    </div>
+  </div>
+
+  <div class="col-12 d-flex gap-2 pt-2">
+    <%= form.submit custom_page.persisted? ? "Update Custom page" : "Create Custom page", class: "btn btn-primary px-4" %>
+    <%= link_to "Cancel", custom_pages_path, class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>

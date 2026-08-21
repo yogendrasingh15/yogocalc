@@ -1,0 +1,35 @@
+<div class="container py-4">
+  <%= render 'shared/page_header', title: 'Custom pages', subtitle: 'Manage your content pages and landing pages', action_button: [{ label: '+ New Custom Page', path: new_custom_page_path, style: 'primary' }] %>
+
+  <% if notice.present? %>
+    <div class="alert alert-success"><%= notice %></div>
+  <% end %>
+
+  <% if @custom_pages.empty? %>
+    <div class="card border-0 shadow-sm">
+      <div class="card-body text-center py-5">
+        <h5 class="fw-bold mb-2">No custom pages found</h5>
+        <p class="text-muted mb-3">Create your first content page to start publishing.</p>
+        <%= link_to 'Create Custom Page', new_custom_page_path, class: 'btn btn-primary' %>
+      </div>
+    </div>
+  <% else %>
+    <div class="row g-4">
+      <% @custom_pages.each do |custom_page| %>
+        <div class="col-md-6 col-xl-4">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-body d-flex flex-column">
+              <%= render custom_page %>
+
+              <div class="mt-4 d-flex gap-2">
+                <%= link_to 'View', custom_page_path(custom_page), class: 'btn btn-outline-secondary btn-sm flex-grow-1' %>
+                <%= link_to 'Edit', edit_custom_page_path(custom_page), class: 'btn btn-outline-primary btn-sm flex-grow-1' %>
+                <%= button_to 'Delete', custom_page_path(custom_page), method: :delete, class: 'btn btn-outline-danger btn-sm flex-grow-1', form: { data: { turbo_confirm: 'Are you sure?' } } %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

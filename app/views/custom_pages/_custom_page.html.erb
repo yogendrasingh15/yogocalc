@@ -1,0 +1,15 @@
+<div id="<%= dom_id custom_page %>" class="d-flex flex-column gap-2">
+  <div class="d-flex justify-content-between align-items-center">
+    <h5 class="mb-0 fw-bold"><%= custom_page.title %></h5>
+    <span class="badge <%= custom_page.status == 'published' ? 'bg-success' : custom_page.status == 'archived' ? 'bg-secondary' : 'bg-warning text-dark' %>"><%= custom_page.status.to_s.humanize %></span>
+  </div>
+
+  <div class="small text-muted">
+    <div><strong>Slug:</strong> /<%= custom_page.slug %></div>
+    <div><strong>Type:</strong> <%= custom_page.page_type.to_s.humanize %></div>
+  </div>
+
+  <% if custom_page.excerpt.present? %>
+    <p class="mb-0 text-secondary"><%= truncate(custom_page.excerpt, length: 120) %></p>
+  <% end %>
+</div>

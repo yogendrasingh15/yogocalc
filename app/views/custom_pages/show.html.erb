@@ -1,0 +1,40 @@
+<div class="container py-4">
+  <% if notice.present? %>
+    <div class="alert alert-success"><%= notice %></div>
+  <% end %>
+
+  <%= render 'shared/page_header', title: @custom_page.title, subtitle: @custom_page.slug, action_button: [{ label: 'Edit', path: edit_custom_page_path(@custom_page), style: 'primary' }, { label: 'Back', path: custom_pages_path, style: 'secondary' }] %>
+
+  <div class="card border-0 shadow-sm">
+    <div class="card-body">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <p><strong>Page type:</strong> <%= @custom_page.page_type.to_s.humanize %></p>
+          <p><strong>Status:</strong> <span class="badge <%= @custom_page.status == 'published' ? 'bg-success' : @custom_page.status == 'archived' ? 'bg-secondary' : 'bg-warning text-dark' %>"><%= @custom_page.status.to_s.humanize %></span></p>
+          <p><strong>Slug:</strong> /<%= @custom_page.slug %></p>
+          <p><strong>Is active:</strong> <%= @custom_page.is_active ? 'Yes' : 'No' %></p>
+          <p><strong>Is homepage:</strong> <%= @custom_page.is_homepage ? 'Yes' : 'No' %></p>
+        </div>
+        <div class="col-md-6">
+          <p><strong>Template:</strong> <%= @custom_page.template.presence || 'Default' %></p>
+          <p><strong>Published at:</strong> <%= @custom_page.published_at&.strftime('%d %b %Y %H:%M') || 'Not set' %></p>
+          <p><strong>Scheduled at:</strong> <%= @custom_page.scheduled_at&.strftime('%d %b %Y %H:%M') || 'Not set' %></p>
+          <p><strong>Featured image:</strong> <%= @custom_page.featured_image.presence || 'None' %></p>
+        </div>
+      </div>
+
+      <hr>
+
+      <h5 class="fw-bold">Excerpt</h5>
+      <p class="text-secondary"><%= @custom_page.excerpt.presence || 'No excerpt available.' %></p>
+
+      <h5 class="fw-bold">Content</h5>
+      <div class="bg-light p-3 rounded"><%= simple_format(@custom_page.content) %></div>
+
+      <div class="mt-4 d-flex gap-2">
+        <%= link_to 'Edit', edit_custom_page_path(@custom_page), class: 'btn btn-primary' %>
+        <%= button_to 'Delete', @custom_page, method: :delete, class: 'btn btn-outline-danger', form: { data: { turbo_confirm: 'Are you sure?' } } %>
+      </div>
+    </div>
+  </div>
+</div>

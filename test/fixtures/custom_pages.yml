@@ -1,0 +1,35 @@
+one:
+  title: Welcome to Yogocalc
+  slug: welcome-to-yogocalc
+  content: This is the homepage content for Yogocalc.
+  excerpt: A short description for the homepage.
+  page_type: standard
+  template: default
+  status: published
+  is_active: true
+  is_homepage: true
+  sort_order: 1
+  meta_title: Welcome to Yogocalc
+  meta_description: Learn more about our platform.
+  meta_keywords: yoga, fitness, wellness
+  canonical_url: https://example.com/
+  robots: index,follow
+  created_by: 1
+
+two:
+  title: About Us
+  slug: about-us
+  content: This is the about page content.
+  excerpt: Learn more about our story.
+  page_type: custom
+  template: default
+  status: draft
+  is_active: true
+  is_homepage: false
+  sort_order: 2
+  meta_title: About Us
+  meta_description: About the Yogocalc story.
+  meta_keywords: about, team, story
+  canonical_url: https://example.com/about
+  robots: index,follow
+  created_by: 1

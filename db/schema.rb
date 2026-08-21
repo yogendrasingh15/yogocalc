@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_08_16_000002) do
+ActiveRecord::Schema[7.0].define(version: 2026_08_17_000001) do
   create_table "account_transactions", force: :cascade do |t|
     t.integer "account_id", null: false
     t.string "transaction_type", null: false
@@ -106,6 +106,42 @@ ActiveRecord::Schema[7.0].define(version: 2026_08_16_000002) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["role_id"], name: "index_contacts_on_role_id"
+  end
+
+  create_table "custom_pages", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "slug", null: false
+    t.text "content", null: false
+    t.text "excerpt"
+    t.string "page_type", null: false
+    t.string "template"
+    t.string "status", default: "draft", null: false
+    t.boolean "is_active", default: true, null: false
+    t.boolean "is_homepage", default: false, null: false
+    t.integer "parent_id"
+    t.integer "sort_order", default: 0, null: false
+    t.string "featured_image"
+    t.string "meta_title"
+    t.text "meta_description"
+    t.text "meta_keywords"
+    t.string "canonical_url"
+    t.string "robots"
+    t.datetime "published_at"
+    t.datetime "scheduled_at"
+    t.bigint "created_by", null: false
+    t.bigint "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_by"], name: "index_custom_pages_on_created_by"
+    t.index ["is_active"], name: "index_custom_pages_on_is_active"
+    t.index ["is_homepage"], name: "index_custom_pages_on_is_homepage"
+    t.index ["parent_id"], name: "index_custom_pages_on_parent_id"
+    t.index ["published_at"], name: "index_custom_pages_on_published_at"
+    t.index ["scheduled_at"], name: "index_custom_pages_on_scheduled_at"
+    t.index ["slug"], name: "index_custom_pages_on_slug", unique: true
+    t.index ["sort_order"], name: "index_custom_pages_on_sort_order"
+    t.index ["status"], name: "index_custom_pages_on_status"
   end
 
   create_table "customers", force: :cascade do |t|
