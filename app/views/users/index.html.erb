@@ -1,0 +1,59 @@
+<div class="container py-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+    <div>
+      <h1 class="h3 mb-1">Users</h1>
+      <p class="text-muted mb-0">Manage user accounts and contact details.</p>
+    </div>
+    <%= link_to "New user", new_user_path, class: "btn btn-primary" %>
+  </div>
+
+  <div class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
+      <%= form_with url: users_path, method: :get, local: true, class: "row g-2 align-items-end" do %>
+        <div class="col-md-8">
+          <%= label_tag :q, "Search", class: "form-label small fw-semibold" %>
+          <%= text_field_tag :q, params[:q], class: "form-control", placeholder: "Search by name or email" %>
+        </div>
+        <div class="col-md-4 d-flex gap-2">
+          <%= submit_tag "Search", class: "btn btn-primary" %>
+          <%= link_to "Reset", users_path, class: "btn btn-outline-secondary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <% if @users.any? %>
+    <div class="card shadow-sm border-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Mobile</th>
+              <th>Joined</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td class="fw-semibold"><%= user.name.presence || "Unnamed user" %></td>
+                <td><%= user.email %></td>
+                <td><%= user.mobile.presence || "-" %></td>
+                <td><%= user.created_at.strftime("%d %b %Y") %></td>
+                <td class="text-end text-nowrap">
+                  <%= link_to "View", user_path(user), class: "btn btn-sm btn-outline-primary" %>
+                  <%= link_to "Edit", edit_user_path(user), class: "btn btn-sm btn-outline-secondary" %>
+                  <%= button_to "Delete", user_path(user), method: :delete, class: "btn btn-sm btn-outline-danger", form: { data: { turbo_confirm: "Are you sure?" } } %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% else %>
+    <div class="alert alert-info">No users found.</div>
+  <% end %>
+</div>

@@ -1,0 +1,59 @@
+<%= form_with(model: user, local: true, class: "row g-3") do |form| %>
+  <% if user.errors.any? %>
+    <div class="col-12">
+      <div class="alert alert-danger">
+        <h6 class="alert-heading"><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h6>
+        <ul class="mb-0">
+          <% user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="col-md-6">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", required: true %>
+  </div>
+  <div class="col-md-6">
+    <%= form.label :email, class: "form-label" %>
+    <%= form.email_field :email, class: "form-control", required: true %>
+  </div>
+  <div class="col-md-6">
+    <%= form.label :mobile, class: "form-label" %>
+    <%= form.number_field :mobile, class: "form-control" %>
+  </div>
+  <div class="col-md-6">
+    <%= form.label :dob, "Date of birth", class: "form-label" %>
+    <%= form.text_field :dob, class: "form-control", placeholder: "YYYY-MM-DD" %>
+  </div>
+  <div class="col-md-6">
+    <%= form.label :gender, class: "form-label" %>
+    <%= form.select :gender, [["Select gender", ""], ["Male", "male"], ["Female", "female"], ["Other", "other"]], {}, class: "form-select" %>
+  </div>
+  <div class="col-md-6 d-flex align-items-end">
+    <div class="form-check mb-2">
+      <%= form.check_box :is_whatsapp, class: "form-check-input" %>
+      <%= form.label :is_whatsapp, "Available on WhatsApp", class: "form-check-label" %>
+    </div>
+  </div>
+  <div class="col-12">
+    <%= form.label :address, class: "form-label" %>
+    <%= form.text_area :address, class: "form-control", rows: 3 %>
+  </div>
+  <% if @user.id.blank? %>
+    <div class="col-md-6">
+        <%= form.label :password, "Password#{' (leave blank to keep current)' if user.persisted?}", class: "form-label" %>
+        <%= form.password_field :password, class: "form-control", required: user.new_record? %>
+    </div>
+    <div class="col-md-6">
+        <%= form.label :password_confirmation, class: "form-label" %>
+        <%= form.password_field :password_confirmation, class: "form-control", required: user.new_record? %>
+    </div>
+  <%end%>
+  <div class="col-12 d-flex gap-2">
+    <%= form.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", users_path, class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>

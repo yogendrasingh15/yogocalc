@@ -88,6 +88,11 @@
       <span>Profiles</span>
     <% end %>
 
+    <%= link_to users_path, class: "list-group-item list-group-item-action #{current_page?(users_path) ? 'active' : ''}" do %>
+      <i class="bi bi-person-gear"></i>
+      <span>Users</span>
+    <% end %>
+
     <%= link_to nominees_path, class: "list-group-item list-group-item-action #{current_page?(nominees_path) ? 'active' : ''}" do %>
       <i class="bi bi-people-fill"></i>
       <span>Nominees</span>
