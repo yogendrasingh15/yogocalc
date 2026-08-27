@@ -1,0 +1,21 @@
+one:
+  site_id: 1
+  title: Welcome
+  slug: welcome
+  path: /
+  status: published
+  template_id: 1
+  content: Welcome to Yogocalc.
+  is_homepage: true
+  published_at: 2026-08-20 10:00:00
+
+two:
+  site_id: 1
+  parent_id: 1
+  title: About Us
+  slug: about-us
+  path: /about-us
+  status: draft
+  template_id: 1
+  content: Learn more about us.
+  is_homepage: false

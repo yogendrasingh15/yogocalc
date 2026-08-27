@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_08_17_000001) do
+ActiveRecord::Schema[7.0].define(version: 2026_08_23_000000) do
   create_table "account_transactions", force: :cascade do |t|
     t.integer "account_id", null: false
     t.string "transaction_type", null: false
@@ -194,6 +194,28 @@ ActiveRecord::Schema[7.0].define(version: 2026_08_17_000001) do
     t.string "image_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "pages", force: :cascade do |t|
+    t.integer "site_id"
+    t.integer "parent_id"
+    t.string "title", null: false
+    t.string "slug", null: false
+    t.string "path"
+    t.string "status", default: "draft", null: false
+    t.integer "template_id"
+    t.text "content", null: false
+    t.boolean "is_homepage", default: false, null: false
+    t.datetime "published_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["is_homepage"], name: "index_pages_on_is_homepage"
+    t.index ["parent_id"], name: "index_pages_on_parent_id"
+    t.index ["published_at"], name: "index_pages_on_published_at"
+    t.index ["site_id"], name: "index_pages_on_site_id"
+    t.index ["slug"], name: "index_pages_on_slug", unique: true
+    t.index ["status"], name: "index_pages_on_status"
+    t.index ["template_id"], name: "index_pages_on_template_id"
   end
 
   create_table "profiles", force: :cascade do |t|

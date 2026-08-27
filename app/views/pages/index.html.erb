@@ -1,0 +1,53 @@
+<div class="container py-4">
+  <%= render 'shared/page_header', title: 'Pages', subtitle: 'Manage your site pages', action_button: [{ label: '+ New Page', path: new_page_path, style: 'primary' }] %>
+
+  <% if notice.present? %>
+    <div class="alert alert-success"><%= notice %></div>
+  <% end %>
+
+  <% if @pages.empty? %>
+    <div class="card border-0 shadow-sm">
+      <div class="card-body text-center py-5">
+        <h5 class="fw-bold mb-2">No pages found</h5>
+        <p class="text-muted mb-3">Create your first page to start building your site.</p>
+        <%= link_to 'Create Page', new_page_path, class: 'btn btn-primary' %>
+      </div>
+    </div>
+  <% else %>
+    <div class="card border-0 shadow-sm">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Path</th>
+              <th scope="col">Status</th>
+              <th scope="col">Homepage</th>
+              <th scope="col">Published</th>
+              <th scope="col" class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @pages.each do |page| %>
+              <tr>
+                <td>
+                  <div class="fw-semibold"><%= page.title %></div>
+                  <div class="small text-muted">/<%= page.slug %></div>
+                </td>
+                <td><%= page.path.presence || "/#{page.slug}" %></td>
+                <td><span class="badge <%= page.status == 'published' ? 'bg-success' : page.status == 'archived' ? 'bg-secondary' : 'bg-warning text-dark' %>"><%= page.status.humanize %></span></td>
+                <td><%= page.is_homepage? ? 'Yes' : 'No' %></td>
+                <td><%= page.published_at&.strftime('%d %b %Y') || 'Not set' %></td>
+                <td class="text-end text-nowrap">
+                  <%= link_to 'View', page_path(page), class: 'btn btn-outline-secondary btn-sm' %>
+                  <%= link_to 'Edit', edit_page_path(page), class: 'btn btn-outline-primary btn-sm' %>
+                  <%= button_to 'Delete', page_path(page), method: :delete, class: 'btn btn-outline-danger btn-sm d-inline-block', form: { data: { turbo_confirm: 'Are you sure?' } } %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% end %>
+</div>

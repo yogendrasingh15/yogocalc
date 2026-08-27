@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :pages
   resources :custom_pages
   resources :offers
   resources :customers

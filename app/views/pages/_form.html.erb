@@ -1,0 +1,69 @@
+<%= form_with(model: page, local: true, class: "row g-3") do |form| %>
+  <% if page.errors.any? %>
+    <div class="alert alert-danger col-12" role="alert">
+      <h5 class="alert-heading">Please correct the following:</h5>
+      <ul class="mb-0">
+        <% page.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="col-md-8">
+    <%= form.label :title, class: "form-label fw-semibold" %>
+    <%= form.text_field :title, class: "form-control", placeholder: "About our company", required: true %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :slug, class: "form-label fw-semibold" %>
+    <%= form.text_field :slug, class: "form-control", placeholder: "about-our-company", required: true %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :site_id, class: "form-label fw-semibold" %>
+    <%= form.number_field :site_id, class: "form-control", min: 1 %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :parent_id, class: "form-label fw-semibold" %>
+    <%= form.number_field :parent_id, class: "form-control", min: 1 %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :template_id, class: "form-label fw-semibold" %>
+    <%= form.number_field :template_id, class: "form-control", min: 1 %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :path, class: "form-label fw-semibold" %>
+    <%= form.text_field :path, class: "form-control", placeholder: "/about-us" %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :status, class: "form-label fw-semibold" %>
+    <%= form.select :status, options_for_select(Page::STATUSES.map { |value| [value.humanize, value] }, page.status), {}, class: "form-select", required: true %>
+  </div>
+
+  <div class="col-12">
+    <%= form.label :content, class: "form-label fw-semibold" %>
+    <%= form.text_area :content, class: "form-control", rows: 10, placeholder: "Page content here...", required: true %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :published_at, class: "form-label fw-semibold" %>
+    <%= form.datetime_local_field :published_at, class: "form-control" %>
+  </div>
+
+  <div class="col-md-6">
+    <div class="form-check form-switch mt-4">
+      <%= form.check_box :is_homepage, class: "form-check-input" %>
+      <%= form.label :is_homepage, class: "form-check-label" %>
+    </div>
+  </div>
+
+  <div class="col-12 d-flex gap-2 pt-2">
+    <%= form.submit page.persisted? ? "Update Page" : "Create Page", class: "btn btn-primary px-4" %>
+    <%= link_to "Cancel", pages_path, class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>
