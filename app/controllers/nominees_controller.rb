@@ -8,13 +8,13 @@ class NomineesController < ApplicationController
   def show; end
 
   def new
-    @nominee = Nominee.new
+    @nominee = current_user.nominees.build
   end
 
   def edit; end
 
   def create
-    @nominee = Nominee.new(nominee_params)
+    @nominee = current_user.nominees.build(nominee_params)
 
     if @nominee.save
       redirect_to @nominee, notice: 'Nominee was successfully created.'
@@ -39,11 +39,13 @@ class NomineesController < ApplicationController
   private
 
     def set_nominee
-      @nominee = Nominee.find(params[:id])
+      @nominee = current_user.nominees.find(params[:id])
     end
 
     def nominee_params
       params.require(:nominee).permit(
+        :user_id,
+        :nominee_for,
         :name,
         :category,
         :description,

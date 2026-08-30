@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_one :profile, dependent: :destroy
   has_many :tickets, dependent: :destroy
+  has_many :nominees, dependent: :destroy
 
   # Create a profile automatically after a user is created.
   after_create :create_profile_from_user
