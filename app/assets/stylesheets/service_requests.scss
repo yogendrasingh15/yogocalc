@@ -1,0 +1,39 @@
+.service-requests-page {
+  background: #f4f7fb;
+  min-height: calc(100vh - 64px);
+
+  .card {
+    border-radius: 0.9rem;
+  }
+
+  .service-request-stat-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+
+  .service-request-table th {
+    white-space: nowrap;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #64748b;
+  }
+
+  .service-request-empty-icon {
+    font-size: 2.5rem;
+  }
+
+  .service-request-description {
+    white-space: pre-line;
+  }
+}
+
+.service-request-form .form-control,
+.service-request-form .form-select {
+  min-height: 2.75rem;
+}

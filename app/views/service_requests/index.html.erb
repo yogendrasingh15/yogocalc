@@ -1,0 +1,138 @@
+<div class="container-fluid py-4 service-requests-page">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <div>
+      <p class="text-uppercase text-primary fw-semibold small mb-1">Customer care</p>
+      <h1 class="h3 fw-bold mb-1">Service requests</h1>
+      <p class="text-muted mb-0">Track customer issues, service visits, and resolutions.</p>
+    </div>
+    <%= link_to new_service_request_path, class: "btn btn-primary px-3" do %>
+      <i class="bi bi-plus-lg me-1"></i> New request
+    <% end %>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <% [
+      ["All requests", @status_counts.values.sum, "bi-inbox", "primary"],
+      ["Open", @status_counts.fetch("open", 0), "bi-circle", "warning"],
+      ["In progress", @status_counts.fetch("in_progress", 0), "bi-arrow-repeat", "info"],
+      ["Resolved", @status_counts.fetch("resolved", 0), "bi-check-circle", "success"]
+    ].each do |label, count, icon, color| %>
+      <div class="col-6 col-xl-3">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body d-flex justify-content-between align-items-center">
+            <div>
+              <p class="text-muted small mb-1"><%= label %></p>
+              <p class="h3 fw-bold mb-0"><%= count %></p>
+            </div>
+            <span class="service-request-stat-icon text-<%= color %> bg-<%= color %>-subtle">
+              <i class="bi <%= icon %>"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+      <%= form_with url: service_requests_path, method: :get, local: true, class: "row g-2 align-items-end" do %>
+        <div class="col-12 col-lg-4">
+          <%= label_tag :q, "Search requests", class: "form-label small fw-semibold" %>
+          <%= text_field_tag :q, params[:q], class: "form-control", placeholder: "Request #, title, customer, or details" %>
+        </div>
+        <div class="col-6 col-lg-2">
+          <%= label_tag :status, "Status", class: "form-label small fw-semibold" %>
+          <%= select_tag :status, options_for_select([["All statuses", ""]] + ServiceRequest::STATUSES.map { |value| [value.humanize, value] }, params[:status]), class: "form-select" %>
+        </div>
+        <div class="col-6 col-lg-2">
+          <%= label_tag :priority, "Priority", class: "form-label small fw-semibold" %>
+          <%= select_tag :priority, options_for_select([["All priorities", ""]] + ServiceRequest::PRIORITIES.map { |value| [value.humanize, value] }, params[:priority]), class: "form-select" %>
+        </div>
+        <div class="col-12 col-lg-2">
+          <%= label_tag :reported_channel, "Channel", class: "form-label small fw-semibold" %>
+          <%= select_tag :reported_channel, options_for_select([["All channels", ""]] + ServiceRequest::REPORTED_CHANNELS.map { |value| [value.humanize, value] }, params[:reported_channel]), class: "form-select" %>
+        </div>
+        <div class="col-12 col-lg-2 d-flex gap-2">
+          <%= submit_tag "Apply", class: "btn btn-primary flex-grow-1" %>
+          <%= link_to "Reset", service_requests_path, class: "btn btn-outline-secondary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm">
+    <div class="card-header bg-white border-0 px-3 px-lg-4 pt-4 pb-2">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="h5 fw-bold mb-0">Service Requests</h2>
+        <span class="text-muted small"><%= @total_count %> <%= "result".pluralize(@total_count) %></span>
+      </div>
+    </div>
+    <% if @service_requests.any? %>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0 service-request-table">
+          <thead class="table-light">
+            <tr>
+              <th>Request</th>
+              <th>Customer / site</th>
+              <th>Issue</th>
+              <th>Channel</th>
+              <th>Priority</th>
+              <th>Status</th>
+              <th>Reported</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @service_requests.each do |service_request| %>
+              <tr>
+                <td>
+                  <%= link_to service_request.request_number, service_request_path(service_request), class: "fw-semibold text-decoration-none" %>
+                  <div class="small text-muted"><%= service_request.request_type.humanize %></div>
+                </td>
+                <td>
+                  <div><%= service_request.customer&.full_name.presence || "Unassigned customer" %></div>
+                  <div class="small text-muted">Site <%= service_request.solar_site_id.presence || "—" %></div>
+                </td>
+                <td>
+                  <div class="fw-semibold"><%= service_request.title %></div>
+                  <div class="small text-muted"><%= service_request.category.presence || "Uncategorized" %></div>
+                </td>
+                <td><%= service_request.reported_channel.humanize %></td>
+                <td><span class="badge <%= service_request_priority_class(service_request.priority) %>"><%= service_request.priority.humanize %></span></td>
+                <td><span class="badge <%= service_request_status_class(service_request.status) %>"><%= service_request.status.humanize %></span></td>
+                <td class="text-nowrap"><%= l(service_request.reported_at, format: :short) %></td>
+                <td class="text-end text-nowrap">
+                  <%= link_to "View", service_request_path(service_request), class: "btn btn-sm btn-outline-primary" %>
+                  <%= link_to "Edit", edit_service_request_path(service_request), class: "btn btn-sm btn-outline-secondary" %>
+                  <%= button_to "Delete", service_request_path(service_request), method: :delete, class: "btn btn-sm btn-outline-danger", form: { class: "d-inline", data: { turbo_confirm: "Delete this service request?" } } %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="d-flex justify-content-between align-items-center px-3 px-lg-4 py-3 border-top">
+        <span class="small text-muted">Page <%= @page %> of <%= @total_pages %></span>
+        <nav aria-label="Service request pages" class="d-flex gap-2">
+          <% if @page > 1 %>
+            <%= link_to "Previous", service_requests_path(request.query_parameters.merge(page: @page - 1)), class: "btn btn-sm btn-outline-secondary" %>
+          <% end %>
+          <% if @page < @total_pages %>
+            <%= link_to "Next", service_requests_path(request.query_parameters.merge(page: @page + 1)), class: "btn btn-sm btn-outline-secondary" %>
+          <% end %>
+        </nav>
+      </div>
+    <% else %>
+      <div class="text-center py-5 px-3">
+        <i class="bi bi-inbox service-request-empty-icon text-muted"></i>
+        <h3 class="h5 mt-3">No service requests found</h3>
+        <p class="text-muted mb-3"><%= params[:q].present? || params[:status].present? || params[:priority].present? || params[:reported_channel].present? ? "Try changing your filters, or clear them to see all requests." : "Create a request to start tracking a customer issue." %></p>
+        <% if params[:q].present? || params[:status].present? || params[:priority].present? || params[:reported_channel].present? %>
+          <%= link_to "Clear filters", service_requests_path, class: "btn btn-outline-primary" %>
+        <% else %>
+          <%= link_to "Create service request", new_service_request_path, class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

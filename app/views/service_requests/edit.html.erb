@@ -1,0 +1,10 @@
+<div class="container py-4 service-requests-page">
+  <div class="mb-4">
+    <%= link_to service_request_path(@service_request), class: "small text-decoration-none" do %>
+      <i class="bi bi-arrow-left me-1"></i> Back to request
+    <% end %>
+    <h1 class="h3 fw-bold mt-3 mb-1">Edit <%= @service_request.request_number %></h1>
+    <p class="text-muted mb-0">Update request details, service level, and visit preferences.</p>
+  </div>
+  <%= render "form", service_request: @service_request %>
+</div>

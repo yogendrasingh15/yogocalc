@@ -1,0 +1,81 @@
+<div class="container py-4 service-requests-page">
+  <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+    <div>
+      <%= link_to service_requests_path, class: "small text-decoration-none" do %>
+        <i class="bi bi-arrow-left me-1"></i> All requests
+      <% end %>
+      <div class="d-flex flex-wrap align-items-center gap-2 mt-3">
+        <h1 class="h3 fw-bold mb-0"><%= @service_request.title %></h1>
+        <span class="badge <%= service_request_status_class(@service_request.status) %>"><%= @service_request.status.humanize %></span>
+      </div>
+      <p class="text-muted mb-0 mt-1"><%= @service_request.request_number %> · Reported <%= l(@service_request.reported_at, format: :long) %></p>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+      <%= link_to "Edit request", edit_service_request_path(@service_request), class: "btn btn-outline-primary" %>
+      <%= button_to "Delete", service_request_path(@service_request), method: :delete, class: "btn btn-outline-danger", form: { data: { turbo_confirm: "Delete this service request?" } } %>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-12 col-xl-8">
+      <div class="card border-0 shadow-sm mb-3">
+        <div class="card-body p-3 p-lg-4">
+          <h2 class="h5 fw-bold mb-3">Issue summary</h2>
+          <p class="mb-4 service-request-description"><%= @service_request.description.presence || "No description provided." %></p>
+          <div class="row g-3">
+            <div class="col-sm-4"><div class="detail-label">Type</div><div class="detail-value"><%= @service_request.request_type.humanize %></div></div>
+            <div class="col-sm-4"><div class="detail-label">Category</div><div class="detail-value"><%= @service_request.category.presence || "—" %></div></div>
+            <div class="col-sm-4"><div class="detail-label">Subcategory</div><div class="detail-value"><%= @service_request.subcategory.presence || "—" %></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card border-0 shadow-sm mb-3">
+        <div class="card-body p-3 p-lg-4">
+          <h2 class="h5 fw-bold mb-3">Customer and solar equipment</h2>
+          <dl class="row mb-0">
+            <dt class="col-sm-4">Customer</dt><dd class="col-sm-8"><%= @service_request.customer&.full_name.presence || "Unassigned" %></dd>
+            <dt class="col-sm-4">Tenant ID</dt><dd class="col-sm-8"><%= @service_request.tenant_id || "—" %></dd>
+            <dt class="col-sm-4">Solar site ID</dt><dd class="col-sm-8"><%= @service_request.solar_site_id || "—" %></dd>
+            <dt class="col-sm-4">Solar system ID</dt><dd class="col-sm-8"><%= @service_request.solar_system_id || "—" %></dd>
+            <dt class="col-sm-4">Solar component ID</dt><dd class="col-sm-8"><%= @service_request.solar_component_id || "—" %></dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-3 p-lg-4">
+          <h2 class="h5 fw-bold mb-3">Request timeline</h2>
+          <dl class="row mb-0">
+            <dt class="col-sm-4">Reported</dt><dd class="col-sm-8"><%= l(@service_request.reported_at, format: :long) %></dd>
+            <dt class="col-sm-4">Acknowledged</dt><dd class="col-sm-8"><%= @service_request.acknowledged_at ? l(@service_request.acknowledged_at, format: :long) : "—" %></dd>
+            <dt class="col-sm-4">Resolved</dt><dd class="col-sm-8"><%= @service_request.resolved_at ? l(@service_request.resolved_at, format: :long) : "—" %></dd>
+            <dt class="col-sm-4">Closed</dt><dd class="col-sm-8"><%= @service_request.closed_at ? l(@service_request.closed_at, format: :long) : "—" %></dd>
+            <dt class="col-sm-4">Created</dt><dd class="col-sm-8"><%= l(@service_request.created_at, format: :long) %></dd>
+            <dt class="col-sm-4">Last updated</dt><dd class="col-sm-8"><%= l(@service_request.updated_at, format: :long) %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-xl-4">
+      <div class="card border-0 shadow-sm mb-3">
+        <div class="card-body p-3 p-lg-4">
+          <h2 class="h5 fw-bold mb-3">Service level</h2>
+          <div class="mb-3"><div class="detail-label">Priority</div><span class="badge <%= service_request_priority_class(@service_request.priority) %>"><%= @service_request.priority.humanize %></span></div>
+          <div class="mb-3"><div class="detail-label">Severity</div><div class="detail-value"><%= @service_request.severity.humanize %></div></div>
+          <div class="mb-3"><div class="detail-label">Reported channel</div><div class="detail-value"><%= @service_request.reported_channel.humanize %></div></div>
+          <div class="mb-3"><div class="detail-label">Reported by</div><div class="detail-value"><%= @service_request.reported_by.presence || "—" %></div></div>
+          <div><div class="detail-label">Customer visibility</div><div class="detail-value"><%= @service_request.customer_visible? ? "Visible" : "Internal only" %></div></div>
+        </div>
+      </div>
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-3 p-lg-4">
+          <h2 class="h5 fw-bold mb-3">Visit and attachments</h2>
+          <div class="mb-3"><div class="detail-label">Preferred visit</div><div class="detail-value"><%= @service_request.preferred_visit_date ? l(@service_request.preferred_visit_date, format: :long) : "No date selected" %><%= @service_request.preferred_visit_time ? " · #{@service_request.preferred_visit_time.strftime('%H:%M')}" : "" %></div></div>
+          <div><div class="detail-label">Attachments</div><div class="detail-value"><%= pluralize(@service_request.attachments_count, "file") %></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

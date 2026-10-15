@@ -64,6 +64,11 @@
       <span>Tickets</span>
     <% end %>
 
+    <%= link_to service_requests_path, class: "list-group-item list-group-item-action #{current_page?(service_requests_path) ? 'active' : ''}" do %>
+      <i class="bi bi-headset"></i>
+      <span>Service Requests</span>
+    <% end %>
+
     <%= link_to offers_path, class: "list-group-item list-group-item-action #{current_page?(offers_path) ? 'active' : ''}" do %>
       <i class="bi bi-bag-heart"></i>
       <span>Offers</span>

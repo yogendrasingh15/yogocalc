@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_08_30_000000) do
+ActiveRecord::Schema[7.0].define(version: 2026_10_04_000000) do
   create_table "account_transactions", force: :cascade do |t|
     t.integer "account_id", null: false
     t.string "transaction_type", null: false
@@ -254,6 +254,46 @@ ActiveRecord::Schema[7.0].define(version: 2026_08_30_000000) do
     t.index ["email"], name: "index_sellers_on_email", unique: true
   end
 
+  create_table "service_requests", force: :cascade do |t|
+    t.integer "tenant_id"
+    t.integer "customer_id"
+    t.integer "solar_site_id"
+    t.integer "solar_system_id"
+    t.integer "solar_component_id"
+    t.string "request_number", null: false
+    t.string "request_type", null: false
+    t.string "category"
+    t.string "subcategory"
+    t.string "title", null: false
+    t.text "description"
+    t.string "reported_by"
+    t.string "reported_channel", null: false
+    t.string "priority", default: "normal", null: false
+    t.string "severity", default: "medium", null: false
+    t.string "status", default: "open", null: false
+    t.datetime "reported_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "acknowledged_at"
+    t.datetime "resolved_at"
+    t.datetime "closed_at"
+    t.boolean "customer_visible", default: true, null: false
+    t.date "preferred_visit_date"
+    t.time "preferred_visit_time"
+    t.integer "attachments_count", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_service_requests_on_customer_id"
+    t.index ["priority"], name: "index_service_requests_on_priority"
+    t.index ["reported_channel"], name: "index_service_requests_on_reported_channel"
+    t.index ["request_number"], name: "index_service_requests_on_request_number", unique: true
+    t.index ["solar_component_id"], name: "index_service_requests_on_solar_component_id"
+    t.index ["solar_site_id"], name: "index_service_requests_on_solar_site_id"
+    t.index ["solar_system_id"], name: "index_service_requests_on_solar_system_id"
+    t.index ["status"], name: "index_service_requests_on_status"
+    t.index ["tenant_id", "reported_at"], name: "index_service_requests_on_tenant_id_and_reported_at"
+    t.index ["tenant_id", "status"], name: "index_service_requests_on_tenant_id_and_status"
+    t.index ["tenant_id"], name: "index_service_requests_on_tenant_id"
+  end
+
   create_table "tickets", force: :cascade do |t|
     t.string "title", null: false
     t.integer "project_id", null: false
@@ -297,5 +337,6 @@ ActiveRecord::Schema[7.0].define(version: 2026_08_30_000000) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "nominees", "users"
   add_foreign_key "profiles", "users"
+  add_foreign_key "service_requests", "customers"
   add_foreign_key "tickets", "users"
 end

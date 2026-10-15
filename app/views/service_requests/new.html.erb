@@ -1,0 +1,10 @@
+<div class="container py-4 service-requests-page">
+  <div class="mb-4">
+    <%= link_to service_requests_path, class: "small text-decoration-none" do %>
+      <i class="bi bi-arrow-left me-1"></i> Back to requests
+    <% end %>
+    <h1 class="h3 fw-bold mt-3 mb-1">New service request</h1>
+    <p class="text-muted mb-0">Create a customer service report and assign it to the right team.</p>
+  </div>
+  <%= render "form", service_request: @service_request %>
+</div>

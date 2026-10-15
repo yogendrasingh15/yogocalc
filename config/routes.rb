@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :account_transactions, only: %i[new create]
   end
   resources :tickets
+  resources :service_requests
   resources :assets
   resources :nominees
   resources :contacts
